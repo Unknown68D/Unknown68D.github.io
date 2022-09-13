@@ -1,12 +1,2193 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-US">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-animate.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
+    <script>
+        var app = angular.module('myApp', ['ngAnimate', 'ngRoute']);
+        //Root Scope
+        app.run(function($rootScope) {
+            $rootScope.scopeColor = 'blue';
+        });
+        
+        //Services
+        app.service('hexafy', function() {
+            this.myFunc = function(x) {
+                return x.toString(16);
+            }
+        })
+
+        //---INTERNAL CONTROLLER DEFINITIONS---
+        app.controller('myCtrlOne', function($scope, $location, $http, $timeout, $interval, hexafy) {
+            //$scope.firstNameModule= "John";
+            //$scope.lastNameModule= "Doe";
+            $scope.ngModelDirectiveName = "John Doe | ngModelDirectiveName |";
+            
+            $scope.firstNameHTML = "first Name HTML";
+            $scope.lastNameHTML = "last Name HTML";
+            
+            $scope.firstNameNGModel = "NG";
+            $scope.lastNameNGModel = "Model";
+            
+            $scope.nameTwoWay = "JohnnyName";
+
+            $scope.changingName = "John (Click to Change Name!)";
+            $scope.changeName = function() {
+                $scope.changingName = "Nelly (Name has changed!)";
+                }
+
+            $scope.firstNameController = "first Name Controller";
+            $scope.lastNameController = "last Name Controller";
+            
+            $scope.firstNameControllerTwo = "1st Name Controller 2"
+            $scope.lastNameControllerTwo = "Lst Name Controller 2";
+            $scope.fullNameControllerTwo = function() {
+                return $scope.firstNameControllerTwo + " " + $scope.lastNameControllerTwo;
+            }
+
+            $scope.carName = "Volvo";
+            $scope.scopeNames = ["Emil", "Tobias", "Linus"];
+
+            $scope.scopeColor = 'red';
+
+            $scope.lastNameFilter = "last NAME filter";
+
+            $scope.myUrl = $location.absUrl();
+
+            $http.get('https://www.w3schools.com/angular/welcome.htm').then(function(response) {
+                $scope.myWelcome = response.data;
+            })
+
+            $scope.myHeader = "Hello World!";
+            $timeout(function () {
+                $scope.myHeader = "How are you today?";
+            }, 2000);
+
+            $scope.theTime = new Date().toLocaleTimeString();
+            $interval(function () {
+                $scope.theTime = new Date().toLocaleTimeString();
+                }, 1000);
+
+            $scope.hex = hexafy.myFunc(255);
+
+            $scope.counts = [255, 251, 200]
+
+            $http.get("https://www.w3schools.com/angular/welcome.htm")
+                .then(function(response) {
+                    $scope.content = response.data;
+                    $scope.statuscode = response.status;
+                    $scope.statustext = response.statusText;            
+            });
+
+            $scope.cars=[
+                {model : "Ford Mustang", color : "red"},
+                {model : "Fiat 500", color : "white"},
+                {model : "Volvo XC90", color : "black"}
+            ];
+
+            $scope.carsTwo = {
+                car01 : "Ford",
+                car02 : "Fiat",
+                car03 : "Volvo"
+            }
+
+            $scope.carsObjects = {
+                car01 : {brand : "Ford", model : "Mustang", color : "red"},
+                car02 : {brand : "Fiat", model : "500", color : "yellow"},
+                car03 : {brand : "Volvo", model : "XC90", color : "dodgerblue"}
+            };
+
+            $scope.mouseOverCount = 0;
+            $scope.clickCount = 0;
+
+            $scope.showMe = false;
+            $scope.myFunc = function() {
+                $scope.showMe = !$scope.showMe;
+            }
+
+            $scope.myFuncTwo = function(myE) {
+                $scope.x = myE.clientX;
+                $scope.y = myE.clientY;
+            }
+
+            $scope.x1 = "JOHN";
+            $scope.x2 = angular.lowercase($scope.x1);
+
+            $scope.x3 = "John";
+            $scope.x4 = angular.uppercase($scope.x3);
+
+            $scope.x5 = angular.isString($scope.x1);
+            $scope.x6 = angular.isNumber($scope.x3);
+        },
+
+        app.controller('personCtrlTwo', function($scope) {
+            $scope.names = [
+                {name:'Jani',country:'Norway'},
+                {name:'Carl',country:'Sweden'},
+                {name:'Margareth',country:'England'},
+                {name:'Hege',country:'Norway'},
+                {name:'Joe',country:'Denmark'},
+                {name:'Gustav',country:'Sweden'},
+                {name:'Birgit',country:'Denmark'},
+                {name:'Mary',country:'England'},
+                {name:'Kai',country:'Norway'}
+                    ];
+                $scope.orderByMe = function(x) {
+                $scope.myOrderBy = x;
+                    }
+                }
+            ),
+        
+        app.controller('costCtrl', function($scope) {
+            $scope.price = 58;
+                }
+            ),
+
+        app.controller('namesCtrlTwo', function($scope) {
+            $scope.names = [
+                'Jani',
+                'Carl',
+                'Margareth',
+                'Hege',
+                'Joe',
+                'Gustav',
+                'Birgit',
+                'Mary',
+                'Kai'        
+                ];
+            }),
+        
+        app.controller('customersCtrl', function($scope, $http) {
+            $http.get("https://www.w3schools.com/angular/customers.php").then(function(response) {
+                $scope.myData = response.data.records;
+            });
+        }),
+
+        app.controller('customersCtrlTwo', function($scope, $http) {
+            $http.get("https://www.w3schools.com/angular/customers_mysql.php")
+            .then(function (response) {$scope.names = response.data.records;});
+        }),
+
+        app.controller('customersCtrlThree', function($scope, $http) {
+            $http.get("https://www.w3schools.com/angular/customers_sql.aspx")
+            .then(function (response) {$scope.names = response.data.records;})
+        }),
+
+        app.controller('formCtrlOne', function($scope) {
+            $scope.firstNameForm = "John";
+        }),
+
+        app.controller('validateCtrl', function($scope) {
+            $scope.user = 'John Doe';
+            $scope.email = 'john.doe@gmail.com';
+        }),
+
+        //---FILTERS---
+        app.filter('myFormat', function() {
+            return function(x) {
+                var i, c, txt = "";
+                for (i = 0; i < x.length; i++) {
+                    c = x[i];
+                    if (i % 2 == 0) {
+                        c = c.toUpperCase();
+                    }
+                txt += c;
+                }
+                return txt;
+                    };
+                }
+            ),
+        
+            app.filter('myFormat',['hexafy', function(hexafy) {
+                    return function(x) {
+                        return hexafy.myFunc(x);
+                    };
+                }]),
+            );
+            
+            app.config(function($routeProvider) {
+                $routeProvider
+                    .when("/", {
+                        template : "<h3>Main</h1><p>Click on the links to change this content</p>"
+                    })
+                    .when("/banana", {
+                        template : "<h3 style='color:brown'>Banana</h1><p>Bananas contain around 75% water.</p>"
+                    })
+                    .when("/tomato", {
+                        template : "<h3 style='color:red'>Tomato</h1><p>Tomatoes contain around 95% water.</p>"
+                    })
+                    .otherwise({
+                        template : "<h3>Nothing</h1><p>Nothing has been selected</p>"
+                    });
+                })
+    </script>
+
+    <!--External Controllers-->
+    <script src="./personController.js"></script>
+    <script src="./namesController.js"></script>
+
+    <script>
+        //Test Directives
+        app.directive("w3TestDirective", function() {
+            return {
+                template : "I was made in a directive constructor!"
+            };
+        });
+
+        app.directive("w3TestDirectiveTwo", function() {
+            return {
+                restrict : "EACM",
+                replace : true,
+                template : "<a style='color: dodgerblue'>Made by a directive!</a>"
+            };
+        });
+
+        app.directive("myDirective", function() {
+            return {
+                require: 'ngModel',
+        link: function(scope, element, attr, mCtrl) {
+            function myValidation(value) {
+                if (value.indexOf("e") > -1) {
+                    mCtrl.$setValidity('charE', true);
+                } else {
+                    mCtrl.$setValidity('charE', false);
+                }
+                return value;
+            }
+            mCtrl.$parsers.push(myValidation);
+                }
+            }
+        })
+    </script>
+
+    <style>
+        table, th , td  {
+            border: 1px solid grey;
+            border-collapse: collapse;
+            padding: 5px;
+        }
+        table tr:nth-child(odd) {
+            background-color: #f1f1f1;
+        }
+        table tr:nth-child(even) {
+            background-color: #ffffff;
+        }
+
+        input.ng-invalid {
+            background-color:pink;
+        }
+        input.ng-valid {
+            background-color:lightgreen;
+        }
+
+        form.ng-pristine {
+            background-color:navy;
+        }
+        form.ng-dirty {
+            background-color:pink;
+        }
+
+        .divAnimation {
+            transition: all linear 0.5s;
+            background-color: navy;
+            height: 100px;
+            width: 100%;
+            position: relative;
+            top: 0;
+            left: 0;
+        }
+
+        .ng-hide {
+            height: 0;
+            width: 0;
+            background-color: transparent;
+            top:-200px;
+            left: 200px;
+        }
+
+    </style>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 </head>
-<body>
-    <p>I'm hosted with GitHub Pages.</p>
+
+<body ng-app="myApp"
+ng-init="
+firstName_Directive='| John (Using ng-init and span) |';
+quantity=3;
+cost=5;
+
+firstNameString='Johnny | firstNameString |';
+lastNameString='Doey | lastNameString |';
+person={firstName:'Dante',lastName:'Romita'};
+
+points=[1,15,19,2,40];
+price=0;
+
+names=['Jani','Hege','Kai'];
+namesAndCountries=[
+{name:'Jani',country:'Norway'},
+{name:'Hege',country:'Sweden'},
+{name:'Kai',country:'Denmark'}];
+"
+
+style="
+    font-family: arial;
+"
+>
+    <h1>AngularJS Intro:</h1>
+
+    <h2>Input Textbox:</h2>
+
+    <p>Name : <input type="text" ng-model="name"></p>
+    <h3>Hello, {{name}}</h3>
+
+    <p>Enter Input Text For Name 2: <input type="text" ng-model="name2"></p>
+    Output: <a ng-bind="name2"></a>
+
+    <p>
+        AngularJS extends HTML with ng-directives.<br>
+        The ng-app directive defines an AngularJS application.<br>
+        The ng-model directive binds the value of HTML controls (input, select, textarea) to application data.<br>
+        The ng-bind directive binds application data to the HTML view.<br>
+    </p>
+    <p>
+        AngularJS starts automatically when the web page has loaded.<br>
+        The ng-app directive tells AngularJS that the div element is the "owner" of an AngularJS application.<br>
+        The ng-model directive binds the value of the input field to the application variable name.<br>
+        The ng-bind directive binds the content of the p element to the application variable name.
+    </p>
+
+    <hr>
+
+    <h2>Directives</h2>
+
+    <p>
+        As you have already seen, AngularJS directives are HTML attributes with an ng prefix.
+        The ng-init directive initializes AngularJS application variables.
+    </p>
+
+    <p>The name is <span ng-bind="firstName_Directive"></span></p>
+
+    <h3>Alternatively...</h3>
+
+    <div data-ng-app="" data-ng-init="firstName_DataNgApp='| John (Using data-ng-init) |'">
+        <p>The name is <span data-ng-bind="firstName_DataNgApp"></span></p>
+    </div>
+
+    <p>You can use data-ng-, instead of ng-, if you want to make your page HTML valid.</p>
+
+    <h2>Expressions</h2>
+
+    <p>
+        AngularJS expressions are written inside double braces: <b>{ { expression } }</b>.
+        AngularJS will "output" data exactly where the expression is written:
+    </p>
+
+    <p>My first expression: { {5 + 5} }</p>
+    <p>Result of Above Expression: {{5 + 5}}</p>
+
+    <h3>Expression Binding:</h3>
+
+    <p>Name: <input type="text" ng-model="name3"></p>
+    <p>Output: {{name3}}</p>
+
+    <hr>
+
+    <h1>AngularJS Expressions</h1>
+
+    <p>
+        - AngularJS expressions can be written inside double braces: { { expression } }.<br>
+        - AngularJS expressions can also be written inside a directive: ng-bind="expression".<br>
+        - AngularJS will resolve the expression, and return the result exactly where the expression is written.<br>
+        - AngularJS expressions are much like JavaScript expressions: They can contain literals, operators, and variables.<br>
+        - Example { { 5 + 5 } } or { { firstName + " " + lastName } }
+    </p>
+
+    <p>My first expression: {{ 5 + 5 }}</p>
+
+    Enter an HTML supported colour name here: <input style="background-color: {{myCol}} " ng-model="myCol">
+
+    <h2>Numbers</h2>
+
+    <p>AngularJS numbers are like JavaScript numbers:</p>
+    <p>
+        Total in dollar (Quantity * Cost): {{ quantity * cost }}<br>
+        Using ng-bind (Span Property): <span ng-bind="quantity * cost"></span>
+    </p>
+    <p>
+        Using ng-init is not very common.
+        You will learn a better way to initialize data in the chapter about controllers.
+    </p>
+
+    <h2>Strings</h2>
+    
+    <p>AngularJS strings are like JavaScript strings:</p>
+    <!--See ng-init at the top of the app declaration.-->
+    <p>
+        The name is {{ firstNameString + " " + lastNameString }}.<br>
+        Using ng-bind: <span ng-bind="firstNameString + ' ' + lastNameString"></span>.
+    </p>
+
+    <h2>Objects</h2>
+
+    <p>AngularJS objects are like JavaScript objects:</p>
+
+    objectName.objectProperty example: (person.firstName person.lastName)
+    <p>
+        My full name is: {{ person.firstName }} {{ person.lastName }}.<br>
+        Using ng-bind and span: The name is <span ng-bind="person.lastName"></span>
+    </p>
+    
+    <h2>Arrays</h2>
+
+    <p>AngularJS arrays are like JavaScript arrays:</p>
+    
+    <p>Array is [1,15,19,2,40]: The third result is {{ points[2] }}.<br>
+        Using ng-bind and span: <span ng-bind="points[2]"></span>.
+    </p>
+
+    <h2>AngularJS Expressions vs. JavaScript Expressions</h2>
+
+    <p>
+        Like JavaScript expressions, AngularJS expressions can contain literals, operators, and variables.<br>
+        Unlike JavaScript expressions, AngularJS expressions can be written inside HTML.<br>
+        AngularJS expressions do not support conditionals, loops, and exceptions, while JavaScript expressions do.<br>
+        AngularJS expressions support filters, while JavaScript expressions do not.<br>
+    </p>
+
+    <hr>
+
+    <h1>AngularJS Modules</h1>
+
+    <p>
+        An AngularJS module defines an application.<br>
+        The module is a container for the different parts of an application.<br>
+        The module is a container for the application controllers.<br>
+        Controllers always belong to a module.<br>
+    </p>
+
+    <h2>Creating a module</h2>
+
+    <p>
+        A module is created by using the AngularJS function <b>angular.module</b>.<br>
+        The "myApp" parameter refers to an HTML element in which the application will run.<br>
+        Now you can add controllers, directives, filters, and more, to your AngularJS application.
+    </p>
+
+    <h2>Adding a Controller</h2>
+
+    <p>
+        Add a controller to your application, and refer to the controller with the <b>ng-controller</b> directive:
+    </p>
+
+    AngularJS <b>modules</b> define AngularJS applications.
+    AngularJS <b>controllers</b> control AngularJS applications.
+    The <b>ng-app</b> directive defines the application, the <b>ng-controller</b> directive defines the controller.
+    
+    <br><br>
+    First Name: <input type="text" ng-model="firstNameModule"><br>
+    Last Name: <input type="text" ng-model="lastNameModule"><br>
+    <br>
+    Full Name: {{firstNameModule + " " + lastNameModule}}
+    
+    <H2>Adding a Directive:</H2>
+
+    <p>
+        AngularJS has a set of built-in directives which you can use to add functionality to your application.<br>
+        In addition you can use the module to add your own directives to your applications:
+        <a href="./w3-testDirective.html">Click Here to See Directives In Action!</a>
+    </p>
+
+    <h2>Modules and Controllers in Files</h2>
+
+    <p>
+        It is common in AngularJS applications to put the module and the controllers in JavaScript files.<br>
+        In this example, "myApp.js" contains an application module definition, while "myCtrl.js" contains the controller:
+    </p>
+
+    <p>
+        The [] parameter in the module definition can be used to define dependent modules.
+        Without the [] parameter, you are not creating a new module, but retrieving an existing one.
+        <b>See the myApp-ModControl files for more info.</b>
+    </p>
+
+    <h2>Functions can Pollute the Global Namespace</h2>
+
+    <p>
+        Global functions should be avoided in JavaScript. They can easily be overwritten or destroyed by other scripts.<br>
+        AngularJS modules reduces this problem, by keeping all functions local to the module.
+    </p>
+
+    <h2>When to Load the Library</h2>
+
+    <p>
+        While it is common in HTML applications to place scripts at the end of the body element,
+        it is recommended that you load the AngularJS library either in the head or at the start of the body.
+        This is because calls to angular.module can only be compiled after the library has been loaded.
+    </p>
+
+    <hr>
+
+    <h1>AngularJS Directives</h1>
+
+    <p>
+        - AngularJS lets you extend HTML with new attributes called Directives.<br>
+        - AngularJS has a set of built-in directives which offers functionality to your applications.<br>
+        - AngularJS also lets you define your own directives.<br>
+    </p>
+
+    <h2>AngularJS Directives</h2>
+
+    <p>
+        - AngularJS directives are extended HTML attributes with the prefix ng-.<br>
+        - The <b>ng-app</b> directive initializes an AngularJS application.<br>
+        - The ng-app directive also tells AngularJS that the div element is the "owner" of the AngularJS application.<br>
+        - The <b>ng-init directive</b> initializes application data.<br>
+        - The <b>ng-model directive</b> binds the value of HTML controls (input, select, textarea) to application data.
+    </p>
+    
+    <h2>Data Binding</h2>
+
+    <p>
+        - The { { firstName } } expression, in the example above, is an AngularJS data binding expression.<br>
+        - Data binding in AngularJS binds AngularJS expressions with AngularJS data.<br>
+        - { { firstName } } is bound with ng-model="firstName".<br>
+        - In the next example two text fields are bound together with two ng-model directives:<br>
+    </p>
+
+    Quantity: <input type="number" ng-model="quantity"><br>
+    Cost: <input type="number" ng-model="price"><br>
+    Total in dollar: {{ quantity * price }}
+
+    <p>NOTE: The type="number" in the code includes functionality to incremenent and decrement via cursor buttons.</p>
+
+    <p>
+        Using ng-init is not very common. You will learn how to initialize data in the chapter about controllers.
+    </p>
+
+    <h2>Repeating HTML Elements</h2>
+
+    <p>
+        - The ng-repeat directive repeats an HTML element.<br>
+        - The ng-repeat directive actually clones HTML elements once for each item in a collection.<br>
+        - The ng-repeat directive used on an array of objects:
+    </p>
+
+    <ul>
+        <li ng-repeat="x in names">
+          {{ x }}
+        </li>
+    </ul>
+
+    <p>
+        The ng-repeat directive actually clones HTML elements once for each item in a collection.<br>
+        The ng-repeat directive used on an array of objects:
+    </p>
+
+    <ul>
+        <li ng-repeat="x in namesAndCountries">
+            {{ x.name + ', ' + x.country }}
+        </li>
+    </ul>
+
+    <p>AngularJS is perfect for database CRUD (Create Read Update Delete) applications.
+        Just imagine if these objects were records from a database.</p>
+
+    <h2>The ng-app Directive</h2>
+    
+    <p>The ng-app directive defines the root element of an AngularJS application.
+        The ng-app directive will auto-bootstrap (automatically initialize) the application when a web page is loaded.</p>
+
+    <h2>The ng-init Directive</h2>
+        
+    <p>
+        The ng-init directive defines initial values for an AngularJS application.
+        Normally, you will not use ng-init. You will use a controller or module instead.
+    </p>
+
+    <h2>The ng-model Directive</h2>
+
+    <p>The ng-model directive binds the value of HTML controls (input, select, textarea) to application data. It can also:</p>
+
+    <ul>
+        <li>
+            Provide type validation for application data (number, email, required).
+        </li>
+        <li>
+            Provide status for application data (invalid, dirty, touched, error).
+            Provide CSS classes for HTML elements.
+            Bind HTML elemnts to HTML forms.
+        </li>
+    </ul>
+
+    <h2>Create New Directives</h2>
+
+    <p>
+        In addition to all the built-in AngularJS directives, you can create your own directives.
+        New directives are created by using the <b>.directive</b> function.
+        To invoke the new directive, make an HTML element with the same tag name as the new directive.
+        When naming a directive, you must use a camel case name, <b>w3TestDirective</b>, but when invoking it, you must use - separated name, <b>w3-test-directive:</b>
+    </p>
+
+    <h4>NOTE: SEE CODE FOR DIRECTIVE SCRIPT!</h4>
+
+    <p>You can invoke a directive by using:</p>
+
+    <ul>
+        <li>Element name (w3-test-directive)(/w3-test-directive)</li>
+        <li>Attribute (div w3-test-directive)(/div)</li>
+        <li>Class (div class="w3-test-directive")(/div)
+        </li>
+        <li>Comment !--(directive: w3-test-directive)--></li>
+    </ul>
+
+    <ul>
+        <li>Element name: <w3-test-directive-two></w3-test-directive-two></li>
+        <li>Attribute: <a w3-test-directive-two></a></li>
+        <li>Class: <div w3-test-directive-two></div></li>
+        <li>Comment: <!-- directive: w3-test-directive-two --></li>
+        <!--NOTE: Only displaying by element name and attribute by default.-->
+    </ul>
+    
+    <p>By default the value is <b>restrict : "EA"</b>, meaning that both Element names and attribute names can invoke the directive.</p>
+
+    <hr>
+
+    <h1>AngularJS ng-model Directive</h1>
+
+    <p>The ng-model directive binds the value of HTML controls (input, select, textarea) to application data.</p>
+
+    <h2>The ng-model Directive</h2>
+
+    <p>With the ng-model directive you can bind the value of an input field to a variable created in AngularJS.</p>
+
+    <div ng-controller="myCtrlOne">
+        Name: <input ng-model="ngModelDirectiveName">
+    </div>
+
+    <h2>Two-Way Binding</h2>
+
+    <p>The binding goes both ways. If the user changes the value inside the input field, the AngularJS property will also change its value:</p>
+
+    Name: <input ng-model="twoWayName">
+    <h4>You entered: {{twoWayName}}</h4>
+
+    <h2>Validate User Input:</h2>
+
+    <p>The <b>ng-model</b> directive can provide type validation for application data (number, e-mail, required):</p>
+
+    <p>Enter your e-mail address in the input field below. AngularJS will display an error message if the address is not an e-mail.</p>
+
+    <form ng-app="" name="myForm">
+        Email:
+        <input type="email" name="myAddress" ng-model="text"><br>
+        Status (Blank if Valid): <span ng-show="myForm.myAddress.$error.email">Not a valid e-mail address</span>
+    </form>
+
+    <p>In the example above, the span will be displayed only if the expression in the ng-show attribute returns true.</p>
+    <p>If the property in the ng-model attribute does not exist, AngularJS will create one for you.</p>
+
+    <h2>Application Status</h2>
+
+    <p>The <b>ng-model</b> directive can provide status for application data (valid, dirty, touched, error):</p>
+
+    <form ng-app="" name="myForm2" ng-init="myText = 'post@myweb.com'">
+        Email:
+        <input type="email" name="myAddress2" ng-model="myText" required>
+        <h3>Status</h3>
+        
+        <p>
+            Valid (if true, the value meets all criteria): {{myForm2.myAddress2.$valid}}<br>
+            Dirty (if true, the value has been changed): {{myForm2.myAddress2.$dirty}}<br>
+            Touched (if true, the field has been in focus at least one time): {{myForm2.myAddress2.$touched}}<br>
+        </p>
+    </form>
+
+    <h2>CSS Classes</h2>
+
+    <style>
+        input.ng-invalid {
+          background-color: red;
+        }
+    </style>
+
+    <form ng-app="" name="myForm3">
+        Enter your name (Field will be red when blank due to the <b>required</b> status in the code.):
+        <input name="myName" ng-model="myText3" required>
+    </form>
+
+    <p>The <b>ng-model</b> directive adds/removes the following classes, according to the status of the form field:</p>
+
+    <ul style="color:orangered"><b>
+        <li>ng-empty</li>
+        <li>ng-not-empty</li>
+        <li>ng-touched</li>
+        <li>ng-untouched</li>
+        <li>ng-valid</li>
+        <li>ng-invalid</li>
+        <li>ng-dirty</li>
+        <li>ng-pending</li>
+        <li>ng-pristine</li>
+    </ul></b>
+
+    <hr>
+    <h1>AngularJS Data Binding</h1>
+
+    <p>Data binding in AngularJS is the synchronization between the model and the view.</p>
+
+    <h2>Data Model</h2>
+
+    <p>AngularJS applications usually have a data model. The data model is a collection of data available for the application.</p>
+
+    <pre>
+var app = angular.module('myApp', []);
+app.controller('myCtrl', function($scope) {
+    $scope.firstname = "John";
+    $scope.lastname = "Doe";
+});
+    </pre>
+
+    <h2>HTML View</h2>
+
+    <p>The HTML container where the AngularJS application is displayed, is called the view.</p>
+    <p>The view has access to the model, and there are several ways of displaying model data in the view.</p>
+    <p>You can use the <b>ng-bind</b> directive, which will bind the innerHTML of the element to the specified model property:</p>
+
+    <div ng-controller="myCtrlOne">
+        <h3>Using ng-bind:</h3>
+        <p>First Name: <a ng-bind="firstNameHTML"></a></p>
+        <p>Last Name: <a ng-bind="lastNameHTML"></a></p>
+
+        <h3>Using Double Braces:</h3>
+
+        <p>First name: {{firstNameHTML}}</p>
+        <p>Last name: {{lastNameHTML}}</p>
+    </div>
+
+    <p>Or you can use the ng-model directive on HTML controls to bind the model to the view.</p>
+
+    <h2>The ng-model Directive</h2>
+
+    <p>Use the <b>ng-model</b> directive to bind data from the model to the view on HTML controls (input, select, textarea).</p>
+    <p>The ng-model directive provides a two-way binding between the model and the view.</p>
+    <p>Use the ng-model directive on HTML controls (input, select, textarea) to bind data between the view and the data model.</p>
+
+    <div ng-controller="myCtrlOne">
+        First Name: <input ng-model="firstNameNGModel"><br>
+        Last Name: <input ng-model="lastNameNGModel">
+    </div>
+
+    <h2>Two-Way Binding</h2>
+
+    <p>Data binding in AngularJS is the synchronization between the model and the view.</p>
+    
+    <p>
+        When data in the model changes, the view reflects the change, and when data in the view changes,
+        the model is updated as well.
+        This happens immediately and automatically, which makes sure that the model and the view is updated at all times.
+    </p>
+
+    <div ng-controller="myCtrlOne">
+        Name: <input ng-model="nameTwoWay">
+        <div>Output: <a style="color:dodgerblue">{{nameTwoWay}}</a></div>
+    </div>
+    
+    <h2>AngularJS Controller</h2>
+
+    <p>Applications in AngularJS are controlled by controllers. Read about controllers in the AngularJS Controllers chapter.</p>
+    <p>
+        Because of the immediate synchronization of the model and the view, 
+        the controller can be completely separated from the view, and simply concentrate on the model data.
+        Thanks to the data binding in AngularJS, the view will reflect any changes made in the controller.
+    </p>
+
+    <div ng-controller="myCtrlOne">
+        <h3 ng-click="changeName()">{{changingName}}</h3>
+    </div>
+    
+    <hr>
+
+    <h1>AngularJS Controllers</h1>
+
+    <p>AngularJS controllers control the data of AngularJS applications. AngularJS controllers are regular JavaScript Objects.</p>
+    <p>
+        AngularJS applications are controlled by controllers.
+        The ng-controller directive defines the application controller.
+        A controller is a JavaScript Object, created by a standard JavaScript object constructor.
+    </p>
+
+    <div ng-controller="myCtrlOne">
+        First Name: <input type="text" ng-model="firstNameController"><br>
+        Last Name: <input type="text" ng-model="lastNameController">
+        <p>Full Name: <a style="color:dodgerblue">{{firstNameController + " " + lastNameController}}</a></p>
+    </div>
+    
+    <h3>Application Explained</h3>
+
+    <p>The AngularJS application is defined by ng-app="myApp". The application runs inside the div.</p>
+    <p>The ng-controller="myCtrl" attribute is an AngularJS directive. It defines a controller.</p>
+    <p>The myCtrl function is a JavaScript function.</p>
+    <p>AngularJS will invoke the controller with a $scope object.</p>
+    <p>In AngularJS, $scope is the application object (the owner of application variables and functions).</p>
+    <p>The controller creates two properties (variables) in the scope (firstName and lastName).</p>
+    <p>The ng-model directives bind the input fields to the controller properties (firstName and lastName).</p>
+
+    <h2>Controller Methods</h2>
+
+    <p>The example above demonstrated a controller object with two properties: lastName and firstName. A controller can also have methods (variables as functions):</p>
+
+    <div ng-controller="myCtrlOne">
+        First Name: <input type="text" ng-model="firstNameControllerTwo"><br>
+        Last Name: <input type="text" ng-model="lastNameControllerTwo"><br>
+        <br>
+        Full Name: <a style="color:dodgerblue">{{fullNameControllerTwo()}}</a>
+    </div>
+
+    <h2>Controllers In External Files</h2>
+
+    <p>In larger applications, it is common to store controllers in external files.</p>
+    <p>Just copy the code between the (script) tags into an external file named personController.js:</p>
+
+    <div ng-controller="personCtrl">
+        First Name: <input type="text" ng-model="firstNameExternal"><br>
+        Last Name: <input type="text" ng-model="lastNameExternal">
+        <p>Full Name: <a style="color:dodgerblue">{{fullNameExternal()}}</a></p>
+    </div>
+    <!--SCRIPT BELOW IMPORTED AT TOP!-->
+    <!--<script src="./personController.js"></script>-->
+    
+    <h2>Another Example</h2>
+
+    <p>This example makes use of the repeating HTML elements.</p>
+
+    <div ng-controller="namesCtrl">
+        <ul>
+            <li ng-repeat="x in names">
+                {{ x.name + ', ' + x.country }}
+            </li>
+        </ul>
+    </div>
+
+    <hr>
+
+    <h1>AngularJS Scope</h1>
+
+    <p>
+        The scope is the binding part between the HTML (view) and the JavaScript (controller).
+        The scope is an object with the available properties and methods.
+        The scope is available for both the view and the controller.
+    </p>
+
+    <h2>How to use the scope?</h2>
+
+    <p>When you make a controller in AngularJS, you pass the <b>$scope</b> object as an argument:</p>
+    <p>Properties made in the controller, can be referred to in the view:</p>
+
+    <p>The property "carname" was made in the controller, and can be referred to in the view by using the { { } } brackets.</p>
+    
+    <div ng-controller="myCtrlOne">
+        <h3>CarName: {{carName}}</h3>
+    </div>
+
+    <p>When adding properties to the $scope object in the controller, the view (HTML) gets access to these properties.
+        In the view, you do not use the prefix $scope, you just refer to a property name, like { {carname} }.</p>
+    
+    <h2>Understanding the Scope</h2>
+
+    <p>If we consider an AngularJS application to consist of:</p>
+    <ul>
+        <li>View, which is the HTML.</li>
+        <li>Model, which is the data avilable for the current view.</li>
+        <li>Controller, which is the JavaScript function that makes/changes/removes/controls the data.</li>
+    </ul>
+
+    <p>Then the scope is the Model. The scope is a JavaScript object with properties and methods, which are available for both the view and the controller.</p>
+
+    <h2>Know Your Scope:</h2>
+
+    <p>It is important to know which scope you are dealing with, at any time.</p>
+    <p>In the two examples above there is only one scope, so knowing your scope is not an issue, but for larger applications there can be sections in the HTML DOM which can only access certain scopes.</p>
+    <p>When dealing with the ng-repeat directive, each repetition has access to the current repetition object:</p>
+
+    <div ng-controller="myCtrlOne">
+        <ul>
+            <li ng-repeat="x in scopeNames">{{x}}</li>
+        </ul>          
+    </div>
+
+    <p>The variable "x" has a different value for each repetition, proving that each repetition has its own scope.</p>
+
+    <p>Each (li) element has access to the current repetition object, in this case a string, which is referred to by using x.</p>
+
+    <h2>Root Scope</h2>
+
+    <p>All applications have a $rootScope which is the scope created on the HTML element that contains the ng-app directive.</p>
+    <p>The rootScope is available in the entire application.</p>
+    <p>If a variable has the same name in both the current scope and in the rootScope, the application uses the one in the current scope.</p>
+
+    <p>A variable named "color" exists in both the controller's scope and in the rootScope:</p>
+
+    <p>The rootScope's favorite color:</p>
+    <h3 style="color:dodgerblue">{{scopeColor}}</h3>
+    <p>The scope of the controller's favorite color:</p>
+    <div ng-controller="myCtrlOne"><h3 style="color:red">{{scopeColor}}</h3></div>
+    <p>The rootScope's favorite color is still:</p>
+    <h3 style="color:dodgerblue">{{scopeColor}}</h3>
+
+    <p>Notice that controller's color variable does not overwrite the rootScope's color value.</p>
+
+    <hr><h1>AngularJS Filters</h1>
+
+    <p>AngularJS provides filters to transform data:</p>
+    <ul>
+        <li><b style="color:orangered">currency:</b> Format a number to a currency format.</li>
+        <li><b style="color:orangered">date:</b> Format a date to a specified format.</li>
+        <li><b style="color:orangered">filter:</b> Select a subset of items from an array.</li>
+        <li><b style="color:orangered">json:</b> Format an object to a JSON string.</li>
+        <li><b style="color:orangered">limitTo:</b> Limits an array/string, into a specified number of elements/characters.</li>
+        <li><b style="color:orangered">lowercase:</b> Format a string to lower case.</li>
+        <li><b style="color:orangered">number:</b> Format a number to a string.</li>
+        <li><b style="color:orangered">orderBy:</b> Orders an array by an expression.</li>
+        <li><b style="color:orangered">uppercase:</b> Format a string to upper case.</li>
+    </ul>
+
+    <h2>Adding Filters to Expressions</h2>
+
+    <div ng-controller="myCtrlOne">
+        <p>Filters can be added to expressions by using the pipe character |, followed by a filter. The <b>uppercase</b> filter format strings to upper case:</p>
+        <p>The last name original is: <a style="color: dodgerblue">{{lastNameFilter}}</a></p>
+        <p>The last name uppercase is: <a style="color: dodgerblue">{{lastNameFilter | uppercase}}</a></p>
+        <p>The last name uppercase is: <a style="color: dodgerblue">{{lastNameFilter | lowercase}}</a></p>
+    </div>
+
+    <h2>Adding Filters to Directives</h2>
+
+    <p>Filters are added to directives, like ng-repeat, by using the pipe character |, followed by a filter:</p>
+    <p>The <b>orderBy</b> filter sorts an array:</p>
+
+    <div ng-controller="personCtrlTwo">
+        <p>Looping with objects:</p>
+        <ul>
+            <li ng-repeat="x in names | orderBy:'country'">
+              {{ x.name + ', ' + x.country }}
+            </li>
+        </ul>
+    </div>
+
+    <h2>The Currency Filter</h2>
+
+    <p>The <b>currency</b> filter formats a number as currency:</p>
+
+    <div ng-controller="costCtrl">
+        Price: {{ price | currency }}
+    </div>
+
+    <p><a href="https://www.w3schools.com/angular/ng_filter_currency.asp">currency Filter Reference</a></p>
+
+    <h2>The filter Filter</h2>
+
+    <p>
+        The filter filter selects a subset of an array.
+        The filter filter can only be used on arrays, and it returns an array containing only the matching items.
+    </p>
+    <p>Return the names that contains the letter "i":</p>
+
+    <div ng-controller="namesCtrlTwo">
+        <ul>
+            <li ng-repeat="x in names | filter : 'i'">
+                {{ x }}
+            </li>
+        </ul>
+    </div>
+
+    <p><a href="https://www.w3schools.com/angular/ng_filter_filter.asp">filter Filter Reference</a></p>
+
+    <h2>Filter an Array Based on User Input</h2>
+
+    <p>By setting the ng-model directive on an input field, we can use the value of the input field as an expression in a filter.</p>
+    <p>Type a letter in the input field, and the list will shrink/grow depending on the match:</p>
+
+    <div ng-controller="namesCtrlTwo">
+        <p><input type="text" ng-model="test"></p>
+        <ul>
+            <li ng-repeat="x in names | filter:test">
+              {{ x }}
+            </li>
+        </ul>
+    </div>
+
+    <h2>Sort an Array Based on User Input</h2>
+
+    <p>By adding the <b style="color: dodgerblue">ng-click</b> directive on the table headers, we can run a function that changes the sorting order of the array:</p>
+    <p>Click the table headers to change the sort order:</p>
+
+    <div ng-controller="personCtrlTwo">
+        <table border="1" width="100%">
+            <tr>
+                <th ng-click="orderByMe('name')">Name</th>
+                <th ng-click="orderByMe('country')">Country</th>
+            </tr>
+            <tr ng-repeat="x in names | orderBy:myOrderBy">
+                <td>{{x.name}}</td>
+                <td>{{x.country}}</td>
+            </tr>
+        </table>
+    </div>
+
+    <h2>Custom Filters:</h2>
+
+    <p>You can make your own filters by registering a new filter factory function with your module:</p>
+    <p>Make a custom filter called "myFormat":</p>
+
+    <div ng-controller="namesCtrlTwo">
+        <ul>
+            <li ng-repeat="x in names">
+                {{x | myFormat}}
+            </li>
+        </ul>
+    </div>
+
+    <p>This particicular <b style="color: dodgerblue">myFormat</b> filter formats every other character to uppercase.</p>
+
+    <hr><h1>AngularJS Services</h1>
+
+    <p>In AngularJS you can make your own service, or use one of the many built-in services.</p>
+    
+    <h2>What is a service?</h2>
+
+    <p>In AngularJS, a service is a function, or object, that is available for, and limited to, your AngularJS application.</p>
+    <p>AngularJS has about 30 built-in services. One of them is the $location service.</p>
+    <p>The $location service has methods which return information about the location of the current web page:</p>
+
+    <p>Use the <b style="color: dodgerblue">$location</b> service in a controller:</p>
+
+    <div ng-controller="myCtrlOne">
+        <p>The url of this page is:</p>
+        <h3>{{myUrl}}</h3>
+    </div>
+
+    <p>Note that the $location service is passed in to the controller as an argument. In order to use the service in the controller, it must be defined as a dependency.</p>
+
+    <h2>Why use Services?</h2>
+
+    <p>For many services, like the $location service, it seems like you could use objects that are already in the DOM,
+        like the <b style="color: dodgerblue">window.location</b> object, and you could, but it would have some limitations, at least for your AngularJS application.</p>
+    <p>AngularJS constantly supervises your application, and for it to handle changes and events properly,
+        AngularJS prefers that you use the $location service instead of the window.location object.</p>
+
+    <h2>The $http Service</h2>
+
+    <p>The <b style="color: dodgerblue">$http</b> service is one of the most common used services in AngularJS applications.
+        The service makes a request to the server, and lets your application handle the response.</p>
+
+    <p>Use the $http service to request data from the server:</p>
+
+    <div ng-controller="myCtrlOne">
+        <p>Today's welcome message is:</p>
+        <h3>{{myWelcome}}</h3>
+    </div>
+
+    <p>The $http service requests a page on the server, and the response is set as the value of the "myWelcome" variable.</p>
+    <p>This example demonstrates a very simple use of the $http service. Learn more about the $http service in the 
+        <a href="https://www.w3schools.com/angular/angular_http.asp">AngularJS Http Tutorial</a>.</p>
+    <p><b>NOTE: 'myWelcome' is empty currently. Consider going back to find a fix.</b></p>
+    
+    <h2>The $timeout Service</h2>
+    
+    <p>The <a style="color: dodgerblue">$timeout</a> service is AngularJS' version of the <a style="color: dodgerblue">window.setTimeout</a> function.</p>
+
+    <p>Ex: Display a new message after two seconds:</p>
+
+    <div ng-controller="myCtrlOne">
+        <p>This header will change after two seconds:</p>
+        <h3>{{myHeader}}</h3>
+    </div>
+
+    <p>The $timeout service runs a function after a specified number of milliseconds.</p>
+
+    <h2>The $interval Service</h2>
+
+    <p>The <a style="color: dodgerblue">$interval</a> service is AngularJS' version of the <a style="color: dodgerblue">window.setInterval</a> function.</p>
+    <p>Ex: Display the time every second:</p>
+
+    <div ng-controller="myCtrlOne">
+        <p>The time is:</p>
+        <h3>{{theTime}}</h3>
+    </div>
+
+    <h2>Create Your Own Service</h2>
+
+    <p>To create your own service, connect your service to the module:</p>
+
+    <p>Create a service name <b style="color: dodgerblue">hexafy:</b></p>
+
+    <div ng-controller="myCtrlOne">
+        <p>The hexadecimal value of 255 is:</p>
+        <h3>{{hex}}</h3>
+    </div>
+
+    <p>A custom service with a method that converts a given number into a hexadecimal number.</p>
+
+    <h2>Use a Custom Service Inside a Filter</h2>
+
+    <p>Once you have created a service, and connected it to your application, you can use the service in any controller, directive, filter, or even inside other services.</p>
+    <p>To use the service inside a filter, add it as a dependency when defining the filter:</p>
+    <p>The service <b style="color: dodgerblue">hexafy</b> used in the filter <b style="color: dodgerblue">myFormat</b>:</p>
+
+    <p>Convert the number 255, using a custom made service inside a custom made filter:</p>
+    <h3>{{255 | myFormat}}</h3>
+
+    <div ng-controller="myCtrlOne">
+        <p>Use a filter when displaying the array [255, 251, 200]:</p>
+            <ul>
+                <li ng-repeat="x in counts">{{x | myFormat}}</li>
+            </ul>
+        <p>This filter uses a service that converts numbers into hexadecimal values.</p>
+    </div>
+
+    <hr><h1>AngularJS AJAX - $http</h1>
+
+    <p>$http is an AngularJS service for reading data from remote servers.</p>
+
+    <h2>AngularJS $http</h2>
+
+    <p>The AngularJS $http service makes a request to the server, and returns a response.</p>
+    <p>Ex. Make a simple request to the server, and display the result in a header:</p>
+
+    <div ng-controller="myCtrlOne">
+        <p>Today's welcome message is:</p>
+        <h3>{{myWelcome}}</h3>
+    </div>
+
+    <h2>Methods</h2>
+    
+    <p>The example above uses the .get method of the $http service.</p>
+    <p>The .get method is a shortcut method of the $http service. There are several shortcut methods:</p>
+
+    <ul style="color:orangered">
+        <li>.delete()</li>
+        <li>.get()</li>
+        <li>.head()</li>
+        <li>.jsonp()</li>
+        <li>.patch()</li>
+        <li>.post()</li>
+        <li>.put()</li>
+    </ul>
+
+    <p>The methods above are all shortcuts of calling the $http service:</p>
+    
+    
+    <p>The example above executes the $http service with an object as an argument.
+        The object is specifying the HTTP method, the url, what to do on success, and what to do on failure.</p>
+    
+    <h2>Properties</h2>
+
+    <p>The response from the server is an object with these properties:</p>
+    
+    <ul>
+        <li><b style="color:orangered">.config:</b> the object used to generate the request.</li>
+        <li><b style="color:orangered">.data:</b> a string, or an object, carrying the response from the server.</li>
+        <li><b style="color:orangered">.headers:</b> a function to use to get header information.</li>
+        <li><b style="color:orangered">.status:</b> a number defining the HTTP status.</li>
+        <li><b style="color:orangered">.statusText:</b> a string defining the HTTP status.</li>
+    </ul>
+
+    <div ng-controller="myCtrlOne">
+        <p>Data : {{content}}</p>
+        <p>Status : {{statuscode}}</p>
+        <p>StatusText : {{statustext}}</p>
+    </div>
+    
+    <h2>JSON</h2>
+
+    <p>The data you get from the response is expected to be in JSON format.</p>
+    <p>JSON is a great way of transporting data, and it is easy to use within AngularJS, or any other JavaScript.</p>
+    <p>Example: On the server we have a file that returns a JSON object containing 15 customers, all wrapped in array called records.</p>
+
+    <div ng-controller="customersCtrl">
+        <ul>
+            <li ng-repeat="x in myData">
+              {{ x.Name + ', ' + x.Country }}
+            </li>
+        </ul>   
+    </div>
+
+    <h3>Application Explained:</h3>
+
+    <p>The application defines the customersCtrl controller, with a $scope and $http object.</p>
+    <p>$http is an XMLHttpRequest object for requesting external data.</p>
+    <p>$http.get() reads JSON data from <a href=https://www.w3schools.com/angular/customers.php>https://www.w3schools.com/angular/customers.php</a>.</p>
+    <p>On success, the controller creates a property, myData, in the scope, with JSON data from the server.</p>
+
+    <h1>AngularJS Tables</h1> 
+
+    <p>The ng-repeat directive is perfect for displaying tables.</p>
+
+    <h2>Displaying Data in a Table</h2>
+
+    <p>Displaying tables with angular is very simple:</p>
+
+    <div ng-controller="customersCtrl">
+        <table>
+            <tr ng-repeat="x in myData">
+              <td>{{ x.Name }}</td>
+              <td>{{ x.Country }}</td>
+            </tr>
+        </table>
+    </div>
+
+    <h2>Displaying in CSS Style</h2>
+
+    <p>To make it nice, add some CSS to the page (See Above)</p>
+
+    <h2>Display with orderBy Filter</h2>
+
+    <p>To sort the table, add an <b>orderBy</b> filter:</p>
+
+    <div ng-controller="customersCtrl">
+        <table>
+            <tr ng-repeat="x in myData | orderBy : 'Country'">
+              <td>{{ x.Name }}</td>
+              <td>{{ x.Country }}</td>
+            </tr>
+        </table>
+    </div>
+
+    <h2>Display with uppercase Filter:</h2>
+
+    <p>To display uppercase, add an <b>uppercase</b> filter:</p>
+
+    <div ng-controller="customersCtrl">
+        <table>
+            <tr ng-repeat="x in myData">
+              <td>{{ x.Name }}</td>
+              <td>{{ x.Country | uppercase }}</td>
+            </tr>
+        </table>
+    </div>
+
+    <h2>Display the Table Index ($index)</h2>
+
+    <p>To display the table index, add a (td) with <b>$index</b>:</p>
+
+    <div ng-controller="customersCtrl">
+        <table>
+            <tr ng-repeat="x in myData">
+              <td>{{ $index + 1 }}</td>
+              <td>{{ x.Name }}</td>
+              <td>{{ x.Country }}</td>
+            </tr>
+        </table>
+    </div>
+
+    <h2>Using $even and $odd</h2>
+
+    <div ng-controller="customersCtrl">
+        <table>
+            <tr ng-repeat="x in myData">
+              <td ng-if="$odd" style="background-color:#008800">{{ x.Name }}</td>
+              <td ng-if="$even">{{ x.Name }}</td>
+              <td ng-if="$odd" style="background-color:#008800">{{ x.Country }}</td>
+              <td ng-if="$even">{{ x.Country }}</td>
+            </tr>
+        </table>
+    </div>
+
+    <hr><h1>AngularJS Select Boxes</h1>
+
+    <p>AngularJS lets you create dropdown lists based on items in an array, or an object.</p>
+
+    <h2>Creating a Select Box Using ng-options</h2>
+
+    <p>If you want to create a dropdown list, based on an object or an array in AngularJS, you should use the <b style="color: orangered">ng-options</b> directive:</p>
+
+    <p>This example shows how to fill a dropdown list using the ng-options directive.</p>
+
+    <div ng-controller="myCtrlOne">
+        <select ng-model="selectedName" ng-options="x for x in names">
+        </select>
+        <p>This example shows how to fill a dropdown list using the ng-repeat directive.</p>
+    </div>
+
+    <h2>ng-options vs ng-repeat</h2>
+
+    <p>You can also use the <b style="color: orangered">ng-repeat</b> directive to make the same dropdown list:</p>
+
+    <div ng-controller="myCtrlOne">
+        <select>
+            <option ng-repeat="x in names">{{x}}</option>
+        </select>
+        <p>This example shows how to fill a dropdown list using the ng-repeat directive.</p>
+    </div>
+
+    <p>Because the <b style="color: orangered">ng-repeat</b> directive repeats a block of HTML code for each item in an array,
+        it can be used to create options in a dropdown list,
+        but the <b style="color: orangered">ng-options</b> directive was made especially for filling a dropdown list with options.</p>
+
+    <h2>What Do I Use?</h2>
+
+    <p>You can use both the <b style="color:orangered">ng-repeat</b> directive and the <b style="color:orangered">ng-options</b> directive:</p>
+    <p>Assume you have an array of objects:</p>
+
+    <pre><code>
+$scope.cars = [
+    {model : "Ford Mustang", color : "red"},
+    {model : "Fiat 500", color : "white"},
+    {model : "Volvo XC90", color : "black"}
+];
+    </code></pre>
+
+    <h3>Example: Using <b style="color:orangered">ng-repeat :</b></h3>
+
+    <div ng-controller="myCtrlOne">
+
+        <p>Select a car:</p>
+        <select ng-model="selectedCar">
+            <option ng-repeat="x in cars" value="{{x.model}}">{{x.model}}</option>
+        </select>
+
+        <h3 style="color:dodgerblue">You selected: <b style="color:orangered">{{selectedCar}}</b></h3>
+    </div>
+
+    <p>When using the value as an object, use ng-value instead of <b style="color:orangered">value:</b></p>
+
+    <div ng-controller="myCtrlOne">
+        <h3>Using ng-repeat as an object:</h3>
+
+        <p>Select a car:</p>
+
+        <select ng-model="selectedCar">
+            <option ng-repeat="x in cars" ng-value="{{x}}">{{x.model}}</option>
+        </select>
+
+        <h3>You selected a {{selectedCar.color}} {{selectedCar.model}}</h3>
+
+        <p>When you use the ng-repeat directive to create dropdown lists, the selected value must be a string.
+
+            In this example you will have to choose between the color or the model to be your selected value.</p>
+
+        <h3>Using ng-options:</h3>
+
+        <select ng-model="selectedCar" ng-options="x.model for x in cars">
+        </select>
+        
+        <h1>You selected: {{selectedCar.model}}</h1>
+        <p>Its color is: <b style="color:{{selectedCar.color}}">{{selectedCar.color}}</b></p>
+    </div>
+
+    <p>
+        When the selected value is an object, it can hold more information, and your application can be more flexible.
+        We will use the <b style="color: orangered">ng-options</b> directive in this tutorial.
+    </p>
+
+    <h2>The Data Source as an Object:</h2>
+
+    <p>In the previous examples the data source was an array, but we can also use an object.</p>
+    <p>Assume you have an object with key-value pairs:</p>
+
+    <pre><code>
+$scope.cars = {
+    car01 : "Ford",
+    car02 : "Fiat",
+    car03 : "Volvo"
+};
+    </code></pre>
+
+    <p>The expression in the <b style="color:orangered">ng-options</b> attribute is a bit different for objects:</p>
+    <p>Example: Using an object as the data source, x represents the key, and y represents the value:</p>
+
+    <div ng-controller="myCtrlOne">
+        <p>Select a car:</p>
+        <select ng-model="selectedCar" ng-options="x for (x, y) in carsTwo">
+        </select>
+
+        <h3>You selected: {{selectedCar}}</h3>
+    </div>
+
+    <p>The selected value will always be the <b>value</b> in a key-value pair. The <b>value</b> in a key-value pair can also be an object:</p>
+
+    <h3>Example:</h3>
+    <p>The selected value will still be the value in a key-value pair, only this time it is an object:</p>
+
+    <div ng-controller="myCtrlOne">
+        <p>Select a car:</p>
+
+        <select ng-model="selectedCar" ng-options="x for (x, y) in carsObjects">
+        </select>
+
+        <h3>You selected: {{selectedCar.brand}}</h3>
+        <h4>Model: {{selectedCar.model}}</h4>
+        <h5>Color: <b style="color:{{selectedCar.color}}">{{selectedCar.color}}</b></h5>
+
+        <p>Note that the selected value represents an object.</p>
+    </div>
+
+    <p>The options in the dropdown list does not have to be the key in a key-value pair, it can also be the value, or a property of the value object:</p>
+    <p>Example:</p>
+
+    <div ng-controller="myCtrlOne">
+        <p>Select a car:</p>
+
+        <select ng-model="selectedCar" ng-options="y.brand for (x, y) in carsObjects">
+        </select>
+
+        <h3>You selected: {{selectedCar.brand}}</h3>
+        <h4>Model: {{selectedCar.model}}</h4>
+        <h5>Color: <b style="color:{{selectedCar.color}}">{{selectedCar.color}}</b></h5>
+
+        <p>The visible text inside the dropdown list can also be a property of the value object.</p>
+    </div>
+
+    <hr><h1>AngularJS SQL</h1>
+
+    <p>AngularJS is perfect for displaying data from a Database. Just make sure the data is in JSON format.</p>
+
+    <h2>Fetching Data From a PHP Server Running MySQL</h2>
+
+    <div ng-controller="customersCtrlTwo">
+        <table>
+            <tr ng-repeat="x in names">
+              <td>{{ x.Name }}</td>
+              <td>{{ x.Country }}</td>
+            </tr>
+        </table>
+    </div>
+
+    <h2>Fetching Data From an ASP.NET Server Running SQL</h2>
+
+    <div ng-controller="customersCtrlThree">
+        <table>
+            <tr ng-repeat="x in names">
+              <td>{{ x.Name }}</td>
+              <td>{{ x.Country }}</td>
+            </tr>
+        </table>
+    </div>
+
+    <h2>Server Code Examples</h2>
+
+    <p>The following section is a listing of the server code used to fetch SQL data.</p>
+
+    <ol>
+        <li>Using PHP and MySQL. Returning JSON.</li>
+        <li>Using PHP and MS Access. Returning JSON.</li>
+        <li>Using ASP.NET, VB, and MS Access. Returning JSON.</li>
+        <li>Using ASP.NET, Razor, and SQL Lite. Returning JSON.</li>
+    </ol>
+
+    <h2>Cross-Site HTTP Requests</h2>
+    
+    <p>A request for data from a different server (other than the requesting page), are called <b>cross-site</b> HTTP requests.</p>
+    <p>Cross-site requests are common on the web. Many pages load CSS, images, and scripts from different servers.</p>
+    <p>In modern browsers, cross-site HTTP requests <b>from scripts</b> are restricted to <b>same site</b> for security reasons.</p>
+    <p>The following line, in our PHP examples, has been added to allow cross-site access.</p>
+
+    <pre><code>
+header("Access-Control-Allow-Origin: *");
+    </code></pre>
+
+    <p><b>Click here for server code: </b><a href="https://www.w3schools.com/angular/angular_sql.asp">https://www.w3schools.com/angular/angular_sql.asp</a></p>
+
+    <hr><h1>AngularJS HTML DOM</h1>
+
+    <p>AngularJS has directives for binding application data to the attributes of HTML DOM elements.</p>
+
+    <h2>The ng-disabled Directive</h2>
+
+    <p>The <b>ng-disabled</b> directive binds AngularJS application data to the disabled attribute of HTML elements.</p>
+
+    <h3>Example:</h3>
+
+    <div ng-init="mySwitch=true">
+        <p>
+            <button ng-disabled="mySwitch">Click Me!</button>
+            </p>
+            <p>
+            <input type="checkbox" ng-model="mySwitch"/>Button
+            </p>
+            <p>
+            {{ mySwitch }}
+        </p>
+    </div>
+
+    <p>Application explained:</p>
+    <p>The <b>ng-disabled</b> directive binds the application data <b>mySwitch</b> to the HTML button's <b>disabled</b> attribute.</p>
+    <p>The <b>ng-model</b> directive binds the value of the HTML checkbox element to the value of <b>mySwitch</b>.</p>
+    <p>If the value of <b>mySwitch</b> evaluates to <b>true</b>, the button will be disabled and vice versa.</p>
+
+    <h2>The ng-show Directive</h2>
+
+    <p>The <b>ng-show</b> directive shows or hides an HTML element.</p>
+
+    <p ng-show="true">I am visible.</p>
+    <p ng-show="false">I am not visible.</p>
+    <p>This line is not visible due to the ng-show property.</p>
+
+    <p>The ng-show directive shows (or hides) an HTML element based on the <b>value</b> of ng-show.</p>
+    <p>You can use any expression that evaluates to true or false:</p>
+
+    <div ng-init="hour=13">
+        <p ng-show="hour > 12">I am visible since 13 > 12.</p>
+        <p ng-show="hour < 12">I am not visible since 13 is not less than 12.</p>
+        <p>This line is not visible since 13 is not less than 12.</p>
+    </div>
+
+    <p>In the next chapter, there are more examples, using the click of a button to hide HTML elements.</p>
+
+    <h2>The ng-hide Directive</h2>
+
+    <p>The <b>ng-hide</b> directive hides or shows an HTML element.</p>
+
+    <p ng-hide="true">I am not visible.</p>
+    <p ng-hide="false">I am visible.</p>
+
+    <h2>Playing with Directives</h2>
+
+    <div ng-init="myShowSwitch=true">
+        <input type="checkbox" ng-model="myShowSwitch"/>Check this box to show a message. Uncheck it to hide a message.
+        <p>Message to right if shown: <a style="color:dodgerblue" ng-show="myShowSwitch">This message means showing</a></p>
+    </div>
+
+    <h2>Angular JS Events</h2>
+
+    <p>You can add AngularJS event listeners to your HTML elements by using one or more of these directives:</p>
+
+    <ul style="color:orangered"><b>
+        <li>ng-blur</li>
+        <li>ng-change</li>
+        <li>ng-click</li>
+        <li>ng-copy</li>
+        <li>ng-cut</li>
+        <li>ng-dblclick</li>
+        <li>ng-focus</li>
+        <li>ng-keydown</li>
+        <li>ng-keypress</li>
+        <li>ng-keyup</li>
+        <li>ng-mousedown</li>
+        <li>ng-mouseenter</li>
+        <li>ng-mouseleave</li>
+        <li>ng-mousemove</li>
+        <li>ng-mouseover</li>
+        <li>ng-mouseup</li>
+        <li>ng-paste</li>
+    </ul></b>
+
+    <p>The event directives allows us to run AngularJS functions at certain user events.</p>
+    <p>An AngularJS event will not overwrite an HTML event, both events will be executed.</p>
+
+    <h2>Mouse Events</h2>
+
+    <p>Mouse events occur when the cursor moves over an element, in this order:</p>
+
+    <ol>
+        <li>ng-mouseover</li>
+        <li>ng-mouseenter</li>
+        <li>ng-mouseleave</li>
+        <li>ng-mousemove</li>
+    </ol>
+
+    <p>Or when a mouse button is clicked on an element, in this order:</p>
+
+    <ol>
+        <li>ng-mousedown</li>
+        <li>ng-mouseup</li>
+        <li>ng-click</li>
+    </ol>
+
+    <p>Or when a mouse button is clicked on an element, in this order:</p>
+
+    <ol>
+        <li>ng-mousedown</li>
+        <li>ng-mouseup</li>
+        <li>ng-click</li>
+    </ol>
+
+    <p>You can add mouse events on any HTML element.</p>
+
+    <p>Example: Increase the count variable when the mouse moves over the H1 element:</p>
+
+    <div ng-controller="myCtrlOne">
+        <h3 ng-mousemove="mouseOverCount = mouseOverCount + 1">Mouse Over Me!</h3>
+        <h3>Count: {{mouseOverCount}}</h3>
+    </div>
+
+    <div ng-controller="myCtrlOne">
+        <button ng-click="clickCount = clickCount + 1">Click Me!</button>
+        <p>{{ clickCount }}</p>
+    </div>
+
+    <h2>Toggle True/False</h2>
+
+    <p>If you want to show a section of HTML code when a button is clicked, and hide when the button is clicked again,
+        like a dropdown menu, make the button behave like a toggle switch:</p>
+
+    <div ng-controller="myCtrlOne">
+        <button ng-click="myFunc()">Click Me!</button>
+        <div ng-show="showMe">
+            <h3>Menu:</h3>
+            <div>Pizza</div>
+            <div>Pasta</div>
+            <div>Pesce</div>
+        </div>
+        <p>Click the button to show/hide the menu.</p>
+    </div>
+
+    <p>The <b style="color:orangered">showMe</b> variable starts out as the Boolean value <b style="color:orangered">false</b>.</p>
+    <p>The <b style="color:orangered">myFunc</b> function sets the <b style="color: orangered">showMe</b>
+        variable to the opposite of what it is, by using the <b style="color: orangered">!</b> (not) operator.</p>
+
+    <h2>$event Object</h2>
+
+    <p>You can pass the <b>$event</b> object as an argument when calling the function.</p>
+    <p>The <b style="color:orangered">$event</b> object contains the browser's event object:</p>
+
+    <div ng-controller="myCtrlOne">
+        <h3 ng-mousemove="myFuncTwo($event)">Mouse Over Me!</h3>
+        <p>Coordinates: {{x + ', ' + y}}</p>
+
+        <p>Mouse over the heading to display the value of clientX and clientY from the event object.</p>
+    </div>
+
+    <hr><h1>Angular JS Forms</h1>
+
+    <p>Forms in AngularJS provides data-binding and validation of input controls.</p>
+        
+    <h2>Input Controls</h2>
+
+    <p>Input controls are the HTML input elements:</p>
+
+    <ul>
+        <li>input elements</li>
+        <li>select elements</li>
+        <li>button elements</li>
+        <li>textarea elements</li>
+    </ul>
+
+    <h2>Data-Binding</h2>
+
+    <p>Input controls provides data-binding by using the <b style="color: orangered">ng-model</b> directive.</p>
+
+    <pre><code>
+(input type="text" ng-model="firstname")
+    </code></pre>
+
+    <p>The application does now have a property named firstname.</p>
+    <p>The <b style="color:orangered">ng-model</b> directive binds the input controller to the rest of your application.</p>
+    <p>The property <b style="color:orangered">firstname</b>, can be referred to in a controller:</p>
+
+    <div ng-controller="formCtrlOne">
+        <form>
+            First Name: <input type="text" ng-model="firstNameForm">
+        </form>
+    </div>
+
+    <p>It can also be referred to elsewhere in the application:</p>
+
+    <form>
+        First Name: <input type="text" ng-model="firstNameLocalForm">
+    </form>
+    <h3>You entered: {{firstNameLocalForm}}</h3>
+
+    <h2>Checkbox</h2>
+
+    <p>A checkbox has the value <b style="color:orangered">true</b> or <b style="color:orangered">false</b>.
+        Apply the <b style="color: orangered">ng-model</b> directive to a checkbox, and use its value in your application.</p>
+
+    <h3>Example: Show the header if the checkbox is checked:</h3>
+
+    <form>
+        Check to show a header:
+        <input type="checkbox" ng-model="myVar">
+    </form>
+
+    <h4 ng-show="myVar">My Header</h4>
+
+    <h2>Radiobuttons</h2>
+
+    <p>Bind radio buttons to your application with the <b style="color:orangered">ng-model</b> directive.</p>
+    <p>Radio buttons with the same <b style="color:orangered">ng-model</b> can have different values, but only the selected one will be used.</p>
+
+    <h3>Example - Display some text, based on the value of the selected radio button:</h3>
+
+    <form>
+        Pick a topic:
+        <input type="radio" ng-model="myVar" value="dogs">Dogs
+        <input type="radio" ng-model="myVar" value="tuts">Tutorials
+        <input type="radio" ng-model="myVar" value="cars">Cars
+    </form>
+
+    <div ng-switch="myVar">
+        <div ng-switch-when="dogs">
+           <h3>Dogs</h3>
+           <p>Welcome to a world of dogs.</p>
+        </div>
+        <div ng-switch-when="tuts">
+           <h3>Tutorials</h3>
+           <p>Learn from examples.</p>
+        </div>
+        <div ng-switch-when="cars">
+            <h3>Cars</h3>
+            <p>Read about cars.</p>
+        </div>
+    </div>
+      
+    <p>The ng-switch directive hides and shows HTML sections depending on the value of the radio buttons.</p>
+    <p>The value of myVar will be either <b style="color:orangered">dogs, tuts, or cars</b>.</p>
+
+    <h2>Selectbox</h2>
+
+    <p>Bind select boxes to your application with the <b style="color: orangered">ng-model</b> directive.</[]>
+    <p>The property defined in the <b style="color:orangered">ng-model</b> attribute will have the value of the selected option in the selectbox.</p>
+    <h3>Example - Display some text, based on the value of the selected option:</h3>
+
+    <form>
+        Select a topic:
+        <select ng-model="myVar">
+          <option value="">
+          <option value="dogs">Dogs
+          <option value="tuts">Tutorials
+          <option value="cars">Cars
+        </select>
+      </form>
+      
+      <div ng-switch="myVar">
+        <div ng-switch-when="dogs">
+           <h4>Dogs</h4>
+           <p>Welcome to a world of dogs.</p>
+        </div>
+        <div ng-switch-when="tuts">
+           <h4>Tutorials</h4>
+           <p>Learn from examples.</p>
+        </div>
+        <div ng-switch-when="cars">
+           <h4>Cars</h4>
+           <p>Read about cars.</p>
+        </div>
+      </div>
+      
+      <p>The ng-switch directive hides and shows HTML sections depending on the value of the dropdown list.</p>
+      <p>The value of myVar will be either <b style="color:orangered">dogs, tuts, or cars</b>.</p>
+
+      <h2><a href="./w3-ResetButton.html">Reset Button</a></h2>
+
+      <p>The novalidate attribute is new in HTML5. It disables any default browser validation.</p>
+
+      <h2>Reset Button Explained</h2>
+
+      <p>The ng-app directive defines the AngularJS application.</p>
+      <p>The ng-controller directive defines the application controller.</p>
+      <p>The ng-model directive binds two input elements to the user object in the model.</p>
+      <p>The formCtrl controller sets initial values to the master object, and defines the reset() method.</p>
+      <p>The reset() method sets the user object equal to the master object.</p>
+      <p>The ng-click directive invokes the reset() method, only if the button is clicked.</p>
+      <p>The novalidate attribute is not needed for this application,
+          but normally you will use it in AngularJS forms, to override standard HTML5 validation.</p>
+
+    <h1>AngularJS Form Validation</h1>
+
+    <p>AngularJS can validate input data.</p>
+
+    <h2>Form Validation</h2>
+
+    <p>AngularJS offers client-side form validation.</p>
+    <p>AngularJS monitors the state of the form and input fields (input, textarea, select), and lets you notify the user about the current state.</p>
+    <p>AngularJS also holds information about whether they have been touched, or modified, or not.</p>
+    <p>You can use standard HTML5 attributes to validate input, or you can make your own validation functions.</p>
+
+    <p>Client-side validation cannot alone secure user input. Server side validation is also necessary.</p>
+
+    <h2>Required</h2>
+
+    <p>Use the HTML5 attribute <b style="color:orangered">required</b> to specify that the input field must be filled out:</p>
+    <h3>Example - The input field is required:</h3>
+
+    <p>Try writing in the input field:</p>
+
+    <form name="myFormInput">
+        <input name="myInput" ng-model="myInput" required>
+    </form>
+
+    <p>The input's valid state is:</p>
+    <h4>{{myFormInput.myInput.$valid}}</h4>
+
+    <h2>Email</h2>
+
+    <h3>Example - The input field has to be an e-mail:</h3>
+
+    <p>Try writing an E-mail address in the input field:</p>
+
+    <form name="myFormEmail">
+        <input type="email" name="myInputEmail" ng-model="myInputEmail">
+    </form>
+    
+    <p>The input's valid state is:</p>
+    <h1>{{myFormEmail.myInput.$valid}}</h1>
+    <p>Note that the state of the input field is "true" before you start writing in it, even if it does not contain an e-mail address.</p>
+
+    <h2>Form State and Input State</h2>
+
+    <p>AngularJS is constantly updating the state of both the form and the input fields.</p>
+    <p>Input fields have the following states:</p>
+
+    <ul>
+        <li><b style="color:orangered">$untouched</b></li>
+        <li><b style="color:orangered">$touched</b></li>
+        <li><b style="color:orangered">$pristine</b></li>
+        <li><b style="color:orangered">$dirty</b></li>
+        <li><b style="color:orangered">$invalid</b></li>
+        <li><b style="color:orangered">$valid</b></li>
+    </ul>
+
+    <p>They are all properties of the input field, and are either
+        <b style="color:orangered">true</b> or <b style="color:orangered">false</b>.</p>
+    
+    <p>Forms have the following states:</p>
+
+    <ul>
+        <li><b style="color:orangered">$pristine</b> | No fields have been modified yet</li>
+        <li><b style="color:orangered">$dirty</b> | One or more have been modified</li>
+        <li><b style="color:orangered">$invalid</b> | The form content is not valid</li>
+        <li><b style="color:orangered">$valid</b> | The form content is valid</li>
+        <li><b style="color:orangered">$submitted</b> | The form is submitted</li>
+    </ul>
+
+    <p>They are all properties of the form, and are either
+        <b style="color:orangered">true</b> or <b style="color:orangered">false</b>.</p>
+
+    <p>You can use these states to show meaningful messages to the user.
+        Example, if a field is required, and the user leaves it blank, you should give the user a warning:</p>
+
+    <h3>Show an error message if the field has been touched AND is empty:</h3>
+
+    <p>Try leaving the first input field blank:</p>
+
+    <form name="myForm">
+        <p>Name:
+        <input name="myName" ng-model="myName" required>
+        <span ng-show="myForm.myName.$touched && myForm.myName.$invalid"> | The name is required.</span>
+    </p>
+    
+    <p>Address:
+        <input name="myAddress" ng-model="myAddress" required>
+    </p>
+    </form>
+    
+    <p>We use the ng-show directive to only show the error message if the field has been touched AND is empty.</p>
+
+    <h2>CSS Classes</h2>
+
+    <p>AngularJS adds CSS classes to forms and input fields depending on their states.</p>
+    <p>The following classes are added to, or removed from, input fields:</p>
+
+    <ul>
+        <li><b style="color:orangered">ng-untouched</b> | The field has not been touched yet</li>
+        <li><b style="color:orangered">ng-touched</b> | The field has been touched</li>
+        <li><b style="color:orangered">ng-pristine</b> | The field has not been modified yet</li>
+        <li><b style="color:orangered">ng-dirty</b> | The field has been modified</li>
+        <li><b style="color:orangered">ng-valid</b> | The field content is valid</li>
+        <li><b style="color:orangered">ng-invalid</b> | The field content is not valid</li>
+        <li><b style="color:orangered">ng-valid-<i>key</i></b>
+            | One <i>key</i> for each validation. Example: <b style="color:orangered">ng-valid-required</b>, useful when there are more than one thing that must be validated</li>
+        <li><b style="color:orangered">ng-invalid-<i>key</i></b> | Example: <b style="color:orangered">ng-invalid-required</b></li>
+    </ul>
+
+    <p>The following classes are added to, or removed from, forms:</p>
+
+    <ul>
+        <li><b style="color:orangered">ng-pristine</b> | No fields have been modified yet</li>
+        <li><b style="color:orangered">ng-dirty</b> | One or more fields have been modified</li>
+        <li><b style="color:orangered">ng-valid</b> | The form content is valid</li>
+        <li><b style="color:orangered">ng-invalid</b> | The form content is not valid</li>
+        <li><b style="color:orangered">ng-valid-<i>key</i></b> | One <i>key</i> for each validation. Example: <b style="color:orangered">ng-valid-required</b>,
+            useful when there are more than one thing that must be validated</li>
+        <li><b style="color:orangered">ng-invalid-<i>key</i></b> | <b style="color:orangered">ng-invalid-required</b></li>
+    </ul>
+
+    <p>The classes are removed if the value they represent is <b style="color:orangered">false</b>.</p>
+    <p>Add styles for these classes to give your application a better and more intuitive user interface.</p>
+    <h3>Example - Apply styles, using standard CSS:</h3>
+
+    <p>Try writing in the input field:</p>
+
+    <form name="myForm">
+        <input name="myName" ng-model="myName" required>
+    </form>
+
+    <p>The input field requires content, and will therefore become <b style="color:lightgreen">green</b> when you write in it.</p>
+
+    <p>Forms can also be styled:</p>
+
+    <h3>Example - Apply styles for unmodified (pristine) forms, and for modified forms:</h3>
+
+    <form name="myFormTwo">
+        <p>Try writing in the input field:</p>
+            <input name="myNameTwo" ng-model="myNameTwo" required>
+        <p>The form gets a "ng-dirty" class when the form has been modified, and will therefore turn pink.</p>
+    </form>
+
+    <h2>Custom Validation</h2>
+
+    <p>To create your own validation function is a bit more tricky; You have to add a new directive to your application,
+        and deal with the validation inside a function with certain specified arguments.</p>
+
+    <h3>Example</h3>
+
+    <p>Create your own directive, containing a custom validation function, and refer to it by using
+        <b style="color:orangered">my-directive</b>.</p>
+    <p>The field will only be valid if the value contains the character "e":</p>
+
+    <p>Try writing in the input field:</p>
+
+    <form name="myForm">
+    <input name="myInput" ng-model="myInput" required my-directive>
+    </form>
+    
+    <p>The input's valid state is:</p>
+    <h1>{{myForm.myInput.$valid}}</h1>
+
+    <p>The input field must contain the character "e" to be consider valid.</p>
+
+    <h3>Example Explained</h3>
+
+    <p>In HTML, the new directive will be referred to by using the attribute <b style="color:orangered">my-directive</b>.</p>
+    <p>In the JavaScript we start by adding a new directive named <b style="color:orangered">myDirective</b>.</p>
+    <p>Remember, when naming a directive, you must use a camel case name, <b style="color:orangered">myDirective</b>,
+        but when invoking it, you must use <b style="color:orangered">-</b> separated name, <b style="color:orangered">my-directive</b>.</p>
+    <p>Then, return an object where you specify that we require <b style="color:orangered">ngModel</b>, which is the ngModelController.</p>
+    <p>Make a linking function which takes some arguments, where the fourth argument,
+        <b style="color:orangered">mCtrl</b>, is the <b style="color:orangered">ngModelController</b>,</p>
+    <p>Then specify a function, in this case named <b style="color:orangered">myValidation</b>,
+        which takes one argument, this argument is the value of the input element.</p>
+    <p>Test if the value contains the letter "e", and set the validity of the model controller to either
+        <b style="color:orangered">true</b> or <b style="color:orangered">false</b>.</p>
+    <p>At last, <b style="color:orangered">mCtrl.$parsers.push(myValidation);</b> will add the
+        <b style="color:orangered">myValidation</b> function to an array of other functions,
+        which will be executed every time the input value changes.</p>
+
+    <h2>Validation Example</h2>
+
+    <form ng-controller="validateCtrl" name="myValidateForm" novalidate>
+        <p>Username:<br>
+            <input type="text" name="user" ng-model="user" required>
+            <span style="color:red" ng-show="myValidateForm.user.$dirty && myValidateForm.user.$invalid">
+            <span ng-show="myValidateForm.user.$error.required">Username is required.</span>
+            </span>
+            </p>
+            
+            <p>Email:<br>
+            <input type="email" name="email" ng-model="email" required>
+            <span style="color:red" ng-show="myValidateForm.email.$dirty && myValidateForm.email.$invalid">
+            <span ng-show="myValidateForm.email.$error.required">Email is required.</span>
+            <span ng-show="myValidateForm.email.$error.email">Invalid email address.</span>
+            </span>
+            </p>
+            
+            <p>
+            <input type="submit"
+            ng-disabled="myValidateForm.user.$dirty && myValidateForm.user.$invalid ||  
+            myValidateForm.email.$dirty && myValidateForm.email.$invalid">
+            </p>
+    </form>
+
+    <p>The HTML form attribute <b>novalidate</b> is used to disable default browser validation.</p>
+
+    <h3>Example Explained</h3>
+
+    <p>The AngularJS directive ng-model binds the input elements to the model.</p>
+    <p>The model object has two properties: <b>user</b> and <b>email</b>.</p>
+    <p>Because of <b>ng-show</b>, the spans with color:red are displayed only when user or email is <b>dirty</b> and <b>$invalid</b>.</p>
+
+    <h1>AngularJS API</h1>
+
+    <p>API stands for <b>Application Programming Interface</b>.</p>
+
+    <h2>AngularJS Global API</h2>
+
+    <p>The AngularJS Global API is a set of global JavaScript functions for performing common tasks like:</p>
+
+    <ul>
+        <li>Comparing objects</li>
+        <li>Iterating objects</li>
+        <li>Converting data</li>
+    </ul>
+
+    <p>The Global API functions are accessed using the angular object. Below is a list of common API functions.</p>
+
+    <table>
+        <tr>
+            <th>API</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td>angular.lowercase()</td>
+            <td>Converts a string to lowercase</td>
+        </tr>
+        <tr>
+            <td>angular.uppercase()</td>
+            <td>Converts a string to uppercase</td>
+        </tr>
+        <tr>
+            <td>angular.isString()</td>
+            <td>Returns true if the reference is a string</td>
+        </tr>
+        <tr>
+            <td>angular.isNumber()</td>
+            <td>Returns true if the reference is a number</td>
+        </tr>
+    </table>
+
+    <div ng-controller="myCtrlOne">
+        <h3>angular.lowercase()</h3>
+        <p>{{ x1 }}</p>
+        <p>{{ x2 }}</p>
+
+        <h3>angular.uppercase()</h3>
+        <p>{{x3}}</p>
+        <p>{{x4}}</p>
+
+        <h3>angular.isString()</h3>
+        <p>{{x5}}</p>
+
+        <h3>angular.isNumber()</h3>
+        <p>{{x6}}</p>
+    </div>
+
+    <p>You can easily use w3.css style sheet together with AngularJS. This chapter demonstrates how.</p>
+
+    <h2>W3.CSS</h2>
+
+    <p>To include W3.CSS in your AngularJS application, add the following line to the head of your document:</p>
+
+    (link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css")
+
+    <p>If you want to study W3.CSS, visit our <a href="https://www.w3schools.com/w3css/default.asp" style="color:purple">W3.CSS Tutorial</a>.</p>
+    <p>Below is a complete HTML example, with all AngularJS directives and W3.CSS classes explained.</p>
+
+    <h3><a href="./w3-AngularJS+W3-CSS.html" style="color:purple">w3 HTML Code</a></h3>
+    <h3><a href="https://www.w3schools.com/angular/angular_w3css.asp" style="color:purple">Code Explained</a></h3>
+
+    <hr><h1>AngularJS Includes</h1>
+
+    <p>With AngularJS, you can include HTML from an external file.</p>
+    <p>No examples load. :(</p>
+    <p>See <a href="https://www.w3schools.com/angular/angular_includes.asp" style="color:purple">
+        AngularJS Includes</a> for working examples.</p>
+
+    <hr><h1>AngularJS Animations</h1>
+    
+    <p>AngularJS provides animated transitions, with help from CSS.</p>
+
+    <h2>What is an Animation?</h2>
+
+    <p>An animation is when the transformation of an HTML element gives you an illusion of motion.</p>
+    <p>EXAMPLE: Click <a href="./w3-Animations.html" style="color:purple">HERE</a> to view an animation.</p>
+
+    <h2>What do I need?</h2>
+
+    <p>To make your applications ready for animations, you must include the AngularJS Animate library:</p>
+    <code>(script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-animate.js")(/script)</code>
+    <p>Then you must refer to the ngAnimate module in your application:</p>
+    <code>(body ng-app="ngAnimate")</code>
+    <p>Or if your application has a name, add <b style="color:orangered">ngAnimate</b> as a dependency in your application module:</p>
+
+    <h3>Hide the DIV: <input type="checkbox" ng-model="myCheck"></h3>
+    <div ng-hide="myCheck" class="divAnimation"></div>
+
+    <h2>What Does ngAnimate Do?</h2>
+
+    <p>The ngAnimate module adds and removes classes.</p>
+    <p>The ngAnimate module does not animate your HTML elements, but when ngAnimate notice certain events,
+        like hide or show of an HTML element, the element gets some pre-defined classes which can be used to make animations.</p>
+    <p>The directives in AngularJS who add/remove classes are:</p>
+
+    <ul style="color:orangered"><b>
+        <li>ng-show</li>
+        <li>ng-hide</li>
+        <li>ng-class</li>
+        <li>ng-view</li>
+        <li>ng-include</li>
+        <li>ng-repeat</li>
+        <li>ng-if</li>
+        <li>ng-switch</li>
+    </ul></b>
+
+    <p>The <b style="color:orangered">ng-show</b> and <b style="color:orangered">ng-hide</b> directives adds or removes a ng-hide class value.</p>
+    <p>The other directives adds a <b style="color:orangered">ng-enter</b> class value when they enter the DOM,
+        and a <b style="color:orangered">ng-leave</b> attribute when they are removed from the DOM.</p>
+    <p>The ng-repeat directive also adds a ng-move class value when the HTML element changes position.</p>
+    <p>In addition, during the animation, the HTML element will have a set of class values, which will be removed when the animation has finished.
+        Example: the <b style="color:orangered">ng-hide</b> directive will add these class values:</p>
+    <ul>
+        <li><b style="color:orangered">ng-animate</b></li>
+        <li><b style="color:orangered">ng-hide-animate</b></li>
+        <li><b style="color:orangered">ng-hide-add</b> (if the element will be hidden)</li>
+        <li><b style="color:orangered">ng-hide-remove</b> (if the element will be showed)</li>
+        <li><b style="color:orangered">ng-hide-add-active</b> (if the element will be hidden)</li>
+        <li><b style="color:orangered">ng-hide-remove-active</b> (if the element will be showed)</li>
+    </ul>
+
+    <h2>Animations Using CSS</h2>
+
+    <p>We can use CSS transitions or CSS animations to animate HTML elements. This tutorial will show you both.</p>
+    <p>To learn more about CSS Animation, study our <a href="https://www.w3schools.com/css/css3_transitions.asp" style="color:purple">
+        CSS Transition Tutorial</a> and our <a href="https://www.w3schools.com/css/css3_animations.asp" style="color:purple">CSS Animation Tutorial</a>.</p>
+
+    <h2>CSS Transitions</h2>
+
+    <p>CSS transitions allows you to change CSS property values smoothly, from one value to another, over a given duration:</p>
+
+    <h3>Example:</h3>
+
+    <p>When the DIV element gets the <b style="color:orangered">.ng-hide</b> class,
+        the <a href="./w3-CSS_Transitions.html" style="color:purple">transition</a> will take 0.5 seconds, and the height will smoothly change from 100px to 0.</p>
+
+    <h2>CSS Animations</h2>
+
+    <p>CSS Animations allows you to change CSS property values smoothly, from one value to another, over a given duration:</p>
+
+    <h3>Example:</h3>
+
+    <p>When the DIV element gets the <b style="color:orangered">.ng-hide</b> class, the <b style="color:orangered">myChange</b>
+        <a href="./w3-CSS_Animations.html" style="color:purple">animation</a> will run, which will smoothly change the height from 100px to 0:</p>
+
+    <hr><h1>AngularJS Routing</h1>
+    
+    <p>Click <a href="https://www.w3schools.com/angular/angular_routing.asp" style="color:purple">HERE</a> to learn more about
+        routing with external files. Doesn't work here. :(</p>
+
+    <h2>Template</h2>
+
+    <p>In the previous examples we have used the templateUrl property in the $routeProvider.when method.</p>
+    <p>You can also use the template property, which allows you to write HTML directly in the property value, and not refer to a page.</p>
+
+    <h3>Example:</h3>
+    <p>Write templates:</p>
+    
+    <p><a href="#/!">Main</a></p>
+
+    <a href="#!banana">Banana</a>
+    <a href="#!tomato">Tomato</a>
+
+    <p>Click on the links to change the content.</p>
+
+    <p>The HTML shown in the ng-view directive are written in the template property of the $routeProvider.when method.</p>
+
+    <div ng-view></div>
+
+    <h2>The otherwise method</h2>
+
+    <p>In the previous examples we have used the when method of the <b style="color:orangered">$routeProvider</b>.</p>
+    <p>You can also use the <b style="color:orangered">otherwise</b> method, which is the default route when none of the others get a match.</p>
+
+    <h3>Example:</h3>
+
+    <p>If neither the "Banana" nor the "Tomato" link has been clicked, or
+        <a href="file:///C:/Users/U68D/Downloads/w3-AngularTutorial/w3-AngularTutorial.html#!/nothing" style="color:purple">
+            the URL is different</a>, let them know:</p>
+
+    <div ng-view></div>
+
+    <h1><a href="./w3-ShoppingListApp.html" style="color:purple">Real AngularJS Application: Shopping List</a></h1>
+
 </body>
 </html>

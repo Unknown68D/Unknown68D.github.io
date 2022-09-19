@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!--<meta http-equiv="X-UA-Compatible" content="IE=edge">-->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css">
@@ -22,7 +22,9 @@
             background-position: center;
         }
 
-        #title {
+        @import url('https://fonts.googleapis.com/css2?family=Rubik&display=swap');
+
+        .title {
             text-align: center;
             font-size: 5.5vw;
             color: cyan;
@@ -31,6 +33,12 @@
                 0.15vw -0.15vw 0 blue,
                 -0.15vw 0.15vw 0 blue,
                 0.15vw 0.15vw 0 blue;
+        }
+
+        @media only screen and (max-width: 880px) {
+            .title {
+                font-size: 36pt;
+            }
         }
 
         .black-outline {
@@ -44,17 +52,18 @@
 
         .nav-btn-text {
             color: white;
-            font-size: 32px;
+            font-size: x-large;
+            margin: 1px 0
         }
     </style>
 </head>
 
-<body class="container" background="./assets/background.png" style="color: white; font-family: Rubik;">
+<body class="container" background="./assets/background.png" style="color: white; font-family: Rubik, sans-serif;">
     <header>
-        <div id="title">Unknown68D's Website</div>
+        <div class="title">Unknown68D's Website</div>
         <!--<p style="text-align: center; font-size: 3vw">Under Construction.</p>-->
         <div class="center">
-            <button class="btn-large waves-effect red accent-3 nav-btn-text"
+            <button class="btn-large waves-effect red accent-4"
                 onclick="window.location.href='https\:\/\/www.youtube.com/channel/UCjAwjBiDUyIF0977WwX22lA';"><a
                     href="https://www.youtube.com/channel/UCjAwjBiDUyIF0977WwX22lA"
                     class="nav-btn-text">YouTube</a></button>
@@ -70,10 +79,12 @@
             <button class="btn-large waves-effect blue-grey nav-btn-text"
                 onclick="window.location.href='https\:\/\/github.com/Unknown68D';"><a
                     href="https://github.com/Unknown68D" class="nav-btn-text">GitHub</a></button></td>
+            <button class="btn-large waves-effect green darken-1 nav-btn-text"
+                onclick="window.location.href='https\:\/\/gdbrowser.com/u/Unknown68D';"><a
+                    href="https://gdbrowser.com/u/Unknown68D" class="nav-btn-text">GD Stats</a></button>
         </div>
     </header>
     <h1 class="black-outline" style="text-align: center;">Under Construction</h1>
-    <p></p>
 </body>
 
 </html>

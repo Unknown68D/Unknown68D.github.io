@@ -4,9 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
+
     <title>Unknown68D's Website</title>
-    <link rel="icon" href="./assets/icon.png"></link>
+    <link rel="icon" href="./assets/icon.png">
+    </link>
+
     <style>
         body {
             background-size: cover;
@@ -17,20 +24,57 @@
 
         #title {
             text-align: center;
-            font-size: 8vw;
+            font-size: 5.9vw;
             color: cyan;
             font-weight: bold;
-            text-shadow: -0.25vw -0.25vw 0 blue,
-                0.25vw -0.25vw 0 blue,
-               -0.25vw 0.25vw 0 blue,
-                0.25vw 0.25vw 0 blue;
+            text-shadow: -0.15vw -0.15vw 0 blue,
+                0.15vw -0.15vw 0 blue,
+                -0.15vw 0.15vw 0 blue,
+                0.15vw 0.15vw 0 blue;
+        }
+
+        .black-outline {
+            text-shadow: -1px -1px 0 black,
+                1px -1px 0 black,
+                -1px 1px 0 black,
+                1px 1px 0 black;
+            text-align: justify;
+            word-wrap: break-word;
+        }
+
+        .nav-btn-text {
+            color: white;
         }
     </style>
 </head>
 
-<body background="./assets/background.png" style="color: white; font-family: Rubik;">
+<body class="container" background="./assets/background.png" style="color: white; font-family: Rubik;">
     <header id="title">Unknown68D's Website</header>
-    <p style="text-align: center; font-size: 3vw">Under Construction.</p>
+    <!--<p style="text-align: center; font-size: 3vw">Under Construction.</p>-->
+    <div class="center">
+        <button class="btn waves-effect red accent-3 nav-btn-text"
+            onclick="window.location.href='https\:\/\/www.youtube.com/channel/UCjAwjBiDUyIF0977WwX22lA';"><a
+                href="https://www.youtube.com/channel/UCjAwjBiDUyIF0977WwX22lA"
+                class="nav-btn-text">YouTube</a></button>
+        <button class="btn waves-effect purple nav-btn-text"
+            onclick="window.location.href='https\:\/\/www.twitch.tv/unknown68d';"><a
+            href="https://www.twitch.tv/unknown68d"
+            class="nav-btn-text">Twitch</a></button></td>
+        <button class="btn waves-effect blue nav-btn-text"
+            onclick="window.location.href='https\:\/\/twitter.com/Unknown68D_';"><a
+            href="https://twitter.com/Unknown68D_"
+            class="nav-btn-text">Twitter</a></button></td>
+        <button class="btn waves-effect indigo nav-btn-text"
+            onclick="window.location.href='https\:\/\/tumblr.com/blog/view/unknown68d';"><a
+            href="https://tumblr.com/blog/view/unknown68d"
+            class="nav-btn-text">Tumblr</a></button></td>
+        <button class="btn waves-effect blue-grey nav-btn-text"
+            onclick="window.location.href='https\:\/\/github.com/Unknown68D';"><a
+            href="https://github.com/Unknown68D"
+            class="nav-btn-text">GitHub</a></button></td>
+    </div>
+    <h1 class="black-outline" style="text-align: center;">Under Construction</h1>
+
 </body>
 
 </html>

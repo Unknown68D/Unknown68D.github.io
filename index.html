@@ -24,55 +24,41 @@
             background-position: center;
         }
 
-        #aboutMeImgFullWidth {
-            content: url('./assets/fullbody.png');
-            width: 400px;
-            padding-top: 30px
-        }
-
-        @media only screen and (max-width: 1400px) {
-            #aboutMeImgFullWidth {
-                display: none;
-            }
-        }
-
-        #aboutMeImgLowWidth {
-            content: url('./assets/square-pfp.png');
-            width: 50%;
-        }
-
-        @media only screen and (min-width: 1401px) {
-            #aboutMeImgLowWidth {
-                display: none;
-            }
-        }
-
         #title {
             text-align: center;
             font-size: 5.5vw;
             color: cyan;
             font-weight: bold;
-            text-shadow: -0.15vw -0.15vw 0 blue,
-                0.15vw -0.15vw 0 blue,
-                -0.15vw 0.15vw 0 blue,
-                0.15vw 0.15vw 0 blue;
+            text-shadow: -0.2vw -0.2vw 0 blue,
+                0.2vw -0.2vw 0 blue,
+                -0.2vw 0.2vw 0 blue,
+                0.2vw 0.2vw 0 blue;
         }
 
         .heading {
             text-align: center;
-            color: cyan;
             font-weight: bold;
-            font-size: 24pt;
-            text-shadow: -2px -2px 0 blue,
+            color: blue;
+            font-size: 28pt;
+            text-shadow: -1px -1px 0 cyan,
+                1px -1px 0 cyan,
+                -1px 1px 0 cyan,
+                1px 1px 0 cyan;
+        }
+
+        @media only screen and (max-width: 1020px) {
+            #title {
+                font-size: 42pt;
+                text-shadow: -2px -2px 0 blue,
                 2px -2px 0 blue,
                 -2px 2px 0 blue,
                 2px 2px 0 blue;
+            }
         }
 
-        @media only screen and (max-width: 880px) {
-            #title {
-                font-size: 36pt;
-            }
+        p {
+            text-align: justify;
+            word-wrap: break-word;
         }
 
         .black-outline {
@@ -80,8 +66,6 @@
                 1px -1px 0 black,
                 -1px 1px 0 black,
                 1px 1px 0 black;
-            text-align: justify;
-            word-wrap: break-word;
         }
 
         .nav-btn-text {
@@ -96,14 +80,37 @@
             justify-content: center
         }
 
-        .topPadding {
-            padding-top: 30px
-        }
-
         #aboutMeText {
-            padding-right: 20px;
             word-wrap: break-word;
             font-size: 14pt
+        }
+
+        #aboutMeImgFullWidth {
+            content: url('./assets/fullbody.png');
+            width: 400px;
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
+
+        @media only screen and (max-width: 1440px) {
+            #aboutMeImgFullWidth {
+                display: none;
+            }
+        }
+
+        #aboutMeImgLowWidth {
+            content: url('./assets/square-pfp.png');
+            width: 50%;
+        }
+
+        @media only screen and (min-width: 1441px) {
+            #aboutMeImgLowWidth {
+                display: none;
+            }
+
+            #aboutMeText {
+                padding-right: 20px;
+            }
         }
     </style>
 </head>
@@ -113,19 +120,19 @@
         <div id="title">Unknown68D's Website</div>
         <!--<p style="text-align: center; font-size: 3vw">Under Construction.</p>-->
         <div class="center">
-            <button class="btn-large waves-effect red darken-3 nav-btn-text"
+            <button class="btn-large waves-effect red darken-4 nav-btn-text"
                 onclick="window.location.href='https\:\/\/www.youtube.com/channel/UCjAwjBiDUyIF0977WwX22lA';"><a
                     href="https://www.youtube.com/channel/UCjAwjBiDUyIF0977WwX22lA"
                     class="nav-btn-text">YouTube</a></button>
             <button class="btn-large waves-effect purple nav-btn-text"
                 onclick="window.location.href='https\:\/\/www.twitch.tv/unknown68d';"><a
                     href="https://www.twitch.tv/unknown68d" class="nav-btn-text">Twitch</a></button></td>
-            <button class="btn-large waves-effect blue nav-btn-text"
+            <button class="btn-large waves-effect blue darken-1 nav-btn-text"
                 onclick="window.location.href='https\:\/\/twitter.com/Unknown68D_';"><a
                     href="https://twitter.com/Unknown68D_" class="nav-btn-text">Twitter</a></button></td>
-            <button class="btn-large waves-effect indigo nav-btn-text"
-                onclick="window.location.href='https\:\/\/tumblr.com/blog/view/unknown68d';"><a
-                    href="https://tumblr.com/blog/view/unknown68d" class="nav-btn-text">Tumblr</a></button></td>
+            <button class="btn-large waves-effect indigo darken-1 nav-btn-text"
+                onclick="window.location.href='https\:\/\/tumblr.com/unknown68d';"><a
+                    href="https://www.tumblr.com/unknown68d" class="nav-btn-text">Tumblr</a></button></td>
             <button class="btn-large waves-effect blue-grey nav-btn-text"
                 onclick="window.location.href='https\:\/\/github.com/Unknown68D';"><a
                     href="https://github.com/Unknown68D" class="nav-btn-text">GitHub</a></button></td>
@@ -135,10 +142,10 @@
         </div>
     </header>
     <!--<h1 class="black-outline" style="text-align: center;">Under Construction</h1>-->
-    <div class="customContainer topPadding heading">About Me (Under Construction)</div>
+    <div class="heading card-panel transparent">About Me! (Under Construction)</div>
 
     <div class="customContainer">
-        <div class="topPadding centreHorizontally" id="aboutMeImgLowWidth"></div>
+        <div class="centreHorizontally" id="aboutMeImgLowWidth"></div>
     </div>
     <div class="customContainer">
         <div class="black-outline" id="aboutMeText">
@@ -173,7 +180,34 @@
         </div>
         <div id="aboutMeImgFullWidth"></div>
     </div>
-    
+    <p class="black-outline" style="text-align: right;">Commission by <a
+            href="https://twitter.com/cbellarchive"><u>@cbellarchive</u></a></p>
+
+    <div class="heading card-panel transparent">My Projects!</div>
+    <ul>
+        <li>2022: A Year Of Revelations Video</li>
+        <li>SMBX: The Epic Quest (A Super Mario Bros. X Episode)</li>
+        <li>Among Us Randomizer</li>
+    </ul>
+
+    <div class="heading card-panel transparent">My Interests & Passions!</div>
+    <ul>
+        <li>Gaming (Burnout, Super Mario, Geometry Dash, Clash Royale, Deltarune)</li>
+        <li>Video Editing</li>
+        <li>Live Streaming</li>
+        <li>Ethics & Social Issues</li>
+        <li>Mental Health & OCD Advocacy</li>
+        <li>Internet Safety</li>
+        <!--
+            <iframe width="640" height="360" src="https://www.youtube.com/embed/tgbNymZ7vqY"></iframe>
+        -->
+    </ul>
+
+    <div class="heading card-panel transparent">Fun Facts & FAQs!</div>
+    <ul>
+        <li>How I came up with my name?</li>
+        <li>How did I get to where I am today?</li>
+    </ul>
 </body>
 
 </html>

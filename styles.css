@@ -1,0 +1,118 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik&display=swap');
+
+body {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+}
+
+#title {
+    text-align: center;
+    font-size: 5.5vw;
+    color: cyan;
+    font-weight: bold;
+    text-shadow: -0.2vw -0.2vw 0 blue,
+        0.2vw -0.2vw 0 blue,
+        -0.2vw 0.2vw 0 blue,
+        0.2vw 0.2vw 0 blue;
+}
+
+.heading {
+    text-align: center;
+    font-weight: bold;
+    color: cyan;
+    font-size: 32pt;
+    text-shadow: -2px -2px 0 blue,
+        2px -2px 0 blue,
+        -2px 2px 0 blue,
+        2px 2px 0 blue;
+}
+
+.subheading {
+    text-align: center;
+    font-weight: bold;
+    color: paleturquoise;
+    text-shadow: -1.5px -1.5px 0 darkslateblue,
+        1.5px -1.5px 0 darkslateblue,
+        -1.5px 1.5px 0 darkslateblue,
+        1.5px 1.5px 0 darkslateblue;
+}
+
+@media only screen and (max-width: 1020px) {
+    #title {
+        font-size: 42pt;
+        text-shadow: -2px -2px 0 blue,
+            2px -2px 0 blue,
+            -2px 2px 0 blue,
+            2px 2px 0 blue;
+    }
+}
+
+p {
+    text-align: justify;
+    word-wrap: break-word;
+}
+
+.black-outline {
+    text-shadow: -1px -1px 0 black,
+        1px -1px 0 black,
+        -1px 1px 0 black,
+        1px 1px 0 black;
+}
+
+.nav-btn-text {
+    color: white;
+    font-size: x-large;
+    margin: 1.5px 0
+}
+
+.customContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center
+}
+
+.generalText {
+    word-wrap: break-word;
+    font-size: 14pt
+}
+
+.favouriteStuffImages {
+    width: 400px;
+}
+
+@media only screen and (max-width: 460px) {
+    .favouriteStuffImages {
+        width: 100%;
+    }
+}
+
+#aboutMeImgFullWidth {
+    content: url('./assets/fullbody.png');
+    width: 300px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 20px;
+}
+
+@media only screen and (max-width: 1200px) {
+    #aboutMeImgFullWidth {
+        display: none;
+    }
+}
+
+#aboutMeImgLowWidth {
+    content: url('./assets/square-pfp.png');
+    width: 50%;
+}
+
+@media only screen and (min-width: 1201px) {
+    #aboutMeImgLowWidth {
+        display: none;
+    }
+
+    #aboutMeText {
+        padding-right: 20px;
+    }
+}

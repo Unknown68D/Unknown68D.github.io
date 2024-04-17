@@ -5,6 +5,9 @@ body {
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-position: center;
+
+    margin-left: 5vw;
+    margin-right: 5vw;
 }
 
 #title {
@@ -78,15 +81,19 @@ p {
     font-size: 14pt
 }
 
-.favouriteStuffImages {
-    width: 400px;
+.projectImages {
+    width: 85%;
 }
 
-@media only screen and (max-width: 460px) {
+.favouriteStuffImages {
+    width: 60%;
+}
+
+/* @media only screen and (max-width: 460px) {
     .favouriteStuffImages {
         width: 100%;
     }
-}
+} */
 
 #aboutMeImgFullWidth {
     content: url('./assets/fullbody.png');

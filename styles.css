@@ -13,42 +13,42 @@ body {
 #title {
     text-align: center;
     font-size: 5.5vw;
-    color: cyan;
+    color: #00c8ff;
     font-weight: bold;
-    text-shadow: -0.2vw -0.2vw 0 blue,
-        0.2vw -0.2vw 0 blue,
-        -0.2vw 0.2vw 0 blue,
-        0.2vw 0.2vw 0 blue;
+    text-shadow: -0.2vw -0.2vw 0 #000096,
+        0.2vw -0.2vw 0 #000096,
+        -0.2vw 0.2vw 0 #000096,
+        0.2vw 0.2vw 0 #000096;
 }
 
 .heading {
     text-align: center;
     font-weight: bold;
-    color: cyan;
+    color: #00c8ff;
     font-size: 32pt;
-    text-shadow: -2px -2px 0 blue,
-        2px -2px 0 blue,
-        -2px 2px 0 blue,
-        2px 2px 0 blue;
+    text-shadow: -2px -2px 0 #000096,
+        2px -2px 0 #000096,
+        -2px 2px 0 #000096,
+        2px 2px 0 #000096;
 }
 
 .subheading {
     text-align: center;
     font-weight: bold;
     color: paleturquoise;
-    text-shadow: -1.5px -1.5px 0 darkslateblue,
-        1.5px -1.5px 0 darkslateblue,
-        -1.5px 1.5px 0 darkslateblue,
-        1.5px 1.5px 0 darkslateblue;
+    text-shadow: -1.5px -1.5px 0 darkslate#000096,
+        1.5px -1.5px 0 darkslate#000096,
+        -1.5px 1.5px 0 darkslate#000096,
+        1.5px 1.5px 0 darkslate#000096;
 }
 
 @media only screen and (max-width: 1020px) {
     #title {
         font-size: 42pt;
-        text-shadow: -2px -2px 0 blue,
-            2px -2px 0 blue,
-            -2px 2px 0 blue,
-            2px 2px 0 blue;
+        text-shadow: -2px -2px 0 #000096,
+            2px -2px 0 #000096,
+            -2px 2px 0 #000096,
+            2px 2px 0 #000096;
     }
 }
 

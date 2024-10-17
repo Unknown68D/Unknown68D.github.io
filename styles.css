@@ -8,6 +8,9 @@ body {
 
     margin-left: 8vw;
     margin-right: 8vw;
+
+    color: white;
+    font-family: Rubik, sans-serif;
 }
 
 #title {
@@ -67,7 +70,8 @@ p {
 .btn-text {
     color: white;
     font-size: x-large;
-    margin: 1.5px 0
+    margin: 1px;
+    margin-bottom: 4px;
 }
 
 .customContainer {
